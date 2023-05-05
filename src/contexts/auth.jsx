@@ -23,16 +23,16 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
 
   if(recoveredUser && token){
     setUser(JSON.parse(recoveredUser)); //
-    api.defaults.headers.Authorization = "${token}";
+    api.defaults.headers.Authorization = "Bearer ${token}";
   }
 
   setLoading(false);  // ajuda no carregamento da pagina
 
 },[]); // independente do estado
 
-  const login = async (email, pass) => {
+  const login = async (username, password) => {
 
-      const response = await createSession(email, pass);
+      const response = await createSession(username, password);
 
       console.log("login", response.data);
 
@@ -46,7 +46,7 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
       localStorage.setItem("token", token); 
 
 
-      api.defaults.headers.Authorization = '${token}';
+      api.defaults.headers.Authorization = 'Bearer ${token}';
 
       
         setUser(loggedUser);
