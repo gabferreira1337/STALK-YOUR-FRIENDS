@@ -32,9 +32,11 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
 
   const login = async (username, password) => {
 
+   
       const response = await createSession(username, password);
-
+      
       console.log("login", response.data);
+  
 
       // api criar uma session
 
