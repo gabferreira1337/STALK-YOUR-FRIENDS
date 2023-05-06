@@ -6,13 +6,17 @@
 
 .title:hover{
 
-  color: rgb(14, 83, 173);
+  color: rgb(168, 192, 224);
 }
 
-
+.navbar-toggler{
+  color: aliceblue;
+  background-color: aliceblue;
+  border: solid;
+}
 
 #basic-nav-dropdown{
-color: aliceblue;
-
-
+  color: aliceblue;
 }
+
+

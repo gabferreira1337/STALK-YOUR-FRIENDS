@@ -10,6 +10,7 @@ import {
 
 
 import { Login } from "./pages/Login"
+import { Register } from "./pages/Register"
 import { AuthProvider, AuthContext } from "./contexts/auth"
 import HomePage  from "./pages/Home"
 
@@ -40,7 +41,9 @@ const AppRoutes = () => {
       <AuthProvider>   
       <Routes>
         <Route exact path="/login" element={<Login/>} />
+        <Route exact path="/register" element={<Register/>} />
         <Route exact path="/" element={<Private><HomePage/></Private>} />
+
       </Routes>
       </AuthProvider>
     </Router>

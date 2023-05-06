@@ -1,11 +1,6 @@
-
 h2 {
-
   color: aliceblue;
-
 }
-
-
 
 label {
   color: aliceblue;
@@ -28,7 +23,6 @@ button {
   cursor: pointer;
 }
 
-
 .link-btn {
   background: none;
   color: white;
@@ -37,4 +31,16 @@ button {
 
 .auth-form-container {
   background-color: black;
+}
+
+#form-container {
+  width: 300px;
+  margin: 0;
+}
+
+
+#col-1{
+
+
+  margin-top: 75px;
 }

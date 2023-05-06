@@ -1,0 +1,30 @@
+
+.map-container{
+  height: 500px;
+ width: 500px;
+}
+
+
+@media (min-width: 992px) {
+  .map-container {
+ margin-left: 370px;
+ height: 800px;
+ width: 800px;
+ border-color: aliceblue;
+}
+}
+
+#maps {
+  background-color: azure;
+}
+
+.container-2{
+
+  border-color: aliceblue;
+  border-width: thin;
+}
+
+.col-2{
+
+  padding: 0rem;
+}

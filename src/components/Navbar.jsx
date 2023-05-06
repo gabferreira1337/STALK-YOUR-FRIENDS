@@ -12,12 +12,12 @@ export default function Navb() {
 
     return(
 
-      <Navbar  className="navbar text-white border border-light"  expand="lg" id='nav'>
+      <Navbar  className="navbar text-white "  expand="lg" id='nav'>
       <Container>
         <Navbar.Brand className="title" href="/login">STALK YOUR FRIENDS</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav text-white"  variant='light' />
         <Navbar.Collapse className="text-white  me-auto"id="basic-navbar-nav">
-          <Nav className="text-white  me-auto">
+          <Nav className=" me-auto " variant='light' >
             <NavDropdown className="about" title="About" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">About</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
