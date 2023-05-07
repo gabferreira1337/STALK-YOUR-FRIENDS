@@ -13,7 +13,8 @@
     "express": "^4.18.2",
     "formik": "^2.2.9",
     "mapbox-gl": "^2.14.1",
-    "path-to-regexp": "^6.2.0",
+    "nodemon": "^2.0.22",
+    "path-to-regexp": "^6.2.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
@@ -22,7 +23,7 @@
     "reactstrap": "^9.1.9",
     "swagger-autogen": "^2.8.0",
     "swagger-jsdoc": "^7.0.0-rc.6",
-    "swagger-ui-express": "^4.6.2",
+    "swagger-ui-express": "^4.6.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1"
   },

@@ -4,7 +4,7 @@ import axios from "axios";
 //const URL = "http://127.0.0.1:5001"
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:5001",
+  baseURL: "https://api.secureme.me/swagger/index.html#/",
 
 });
 
@@ -32,7 +32,7 @@ export const getUsers = async() => {
 
 export const createUser = async (firstname, lastname, email, password) => {
   try {
-    const response = await axios.post('/user', {firstname, lastname, email, password});
+    const response = await api.post('/auth/register', {firstName: firstname, lastName: lastname, email, password});
     return response.data; // Return the created user object
   } catch (error) {
     // Handle the error

@@ -13,11 +13,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
 
   return (
     <div className="App container-fluid">

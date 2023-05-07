@@ -10,7 +10,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 export const Register = (props) => {
     
     const navigate_home = useNavigate('');
-    const {authenticated, login} = useContext(AuthContext);
+    const {authenticated, login,register} = useContext(AuthContext);
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -19,19 +19,23 @@ export const Register = (props) => {
 
     // stop using default action of form
 
+    const validatePassword = () => {
+        const passRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return passRegex.test(password);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("submit");
+
+        if (!validatePassword()) {
+            alert('Password must be at least 8 characters long and contain at least one capital letter');
+            return;
+        }
+
+       // console.log("submit");
 
         register(firstname,lastname,email,password);
        
-       
-        
-       
-        
-        
-
-        //navigate_home('/');
     }
 
     return (

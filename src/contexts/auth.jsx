@@ -30,39 +30,37 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
 
 },[]); // independente do estado
 
-  const register = async (firstname, lastname,email,password) => {
+
+const register = async (firstname,lastname,email,password) => {
 
   try {
-   const response = await createUser(firstname, lastname,email,password);
+
+    const response = await createUser(firstname,lastname,email,password);
+    const loggedUser = response.data.firstname;
+   // const token = response.data.token;
+      
+    // localStorage.setItem("user", JSON.stringify(loggedUser));   //save in the local storage 
+
+    // localStorage.setItem("token", token); 
+
+
+     //api.defaults.headers.Authorization = `Bearer ${token}`;
+
      
-     console.log("register", response.data);
+       setUser(loggedUser);
+      console.log("Navigating");
+       navigate('/');
+     
+    // console.log("register", response.data);
      
    
   } catch (error) {
      console.error('API request error:', error);
    
   }
-     //const response = await createSession(username, password);
-     
-    // console.log("login", response.data);
- 
-
-     // api criar uma session
-
-     //const loggedUser = response.data.user;
-     //const token = response.data.token;
-      
-    /* localStorage.setItem("user", JSON.stringify(loggedUser));   //save in the local storage 
-
-     localStorage.setItem("token", token); 
-
-
-     api.defaults.headers.Authorization = 'Bearer ${token}';*/
 
      
-       //setUser(loggedUser);
-       navigate('/');
-     
+
  };
 
 

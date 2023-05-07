@@ -33,22 +33,7 @@ export const Login = (props) => {
             alert('Password must be at least 8 characters long and contain at least one capital letter');
             return;
         }
-
-       /* try {
-
-            //const response  =  axios.post(LOGIN_URL, JSON.stringify({ //password,  username}));
-
-           // const users =  getUsers();
-
-            //console.log(users.data);
-
-            //console.log(JSON.stringify(response?.data))
-            //console.log(JSON.stringify(response));
-
-        } catch (err){
-            console.error(err);
-
-        }*/
+        
 
         console.log("Hello",{username, password});
         login(username, password)              // context + api implementation

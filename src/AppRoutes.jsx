@@ -1,4 +1,4 @@
-import React, {useContext, userContext} from "react"
+import React, {useContext} from "react"
 
 
 import {
@@ -12,7 +12,7 @@ import {
 import { Login } from "./pages/Login"
 import { Register } from "./pages/Register"
 import { AuthProvider, AuthContext } from "./contexts/auth"
-import HomePage  from "./pages/Home"
+import  HomePage   from "./pages/Home"
 
 
 
@@ -27,6 +27,7 @@ const AppRoutes = () => {
       return <div className="loading">Carregando...</div>;
 
     }
+
 
     if(!authenticated){     //if not authenticated
       return <Navigate to="/login"/>;
