@@ -14,7 +14,7 @@ const LOGIN_URL = '/auth/login';
 
 export const Login = (props) => {
 
-    const navvigate_register = useNavigate();
+    const navigate_register = useNavigate();
     const {authenticated, login} = useContext(AuthContext);
 
     const [username, setUsername] = useState('');     /* save email email = getter setEmail = setter*/
@@ -36,7 +36,8 @@ export const Login = (props) => {
         
 
         console.log("Hello",{username, password});
-        login(username, password)              // context + api implementation
+
+        login(username, password);             // context + api implementation
     }
 
     return (
@@ -47,19 +48,19 @@ export const Login = (props) => {
             <Col sm={6} className="" id="col-1">
             <h2>Welcome Back!</h2>
             <Form className="login-form " onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicUsername">
+                <Form.Group >
                 <Form.Label htmlFor="username">username</Form.Label>
-                <Form.Control value={username} onChange={(e) => setUsername(e.target.value)}type="text" placeholder="0x1337" id="username" name="username" />
+                <Form.Control value={username} onChange={(e) => setUsername(e.target.value)}type="text" placeholder="0x1337"  id="username" name="username" />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group>
                 <Form.Label htmlFor="password">password</Form.Label>
                 <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 </Form.Group>
 
                 <Button className="btn btn-light btn-outline-dark btn-lg" type="submit">Log In</Button>
             </Form>
-            <button className="link-btn" onClick={() => navvigate_register('/register')}>Don't have an account? Register here.</button>
+            <button className="link-btn" onClick={() => navigate_register('/register')}>Don't have an account? Register here.</button>
             </Col>
 
             <Col sm={6} className="col-2 " >
@@ -72,21 +73,4 @@ export const Login = (props) => {
 
         </>
     )
-
-    /*return (
-        <>
-        <Navbar/>
-        <div className="auth-form-container">
-            <h2>Welcome Back!</h2>
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="username">username</label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)}type="text" placeholder="0x1337" id="username" name="username" />
-                <label htmlFor="password">password</label>
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-                <button className="btn btn-light btn-outline-dark btn-lg" type="submit">Log In</button>
-            </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here.</button>
-        </div>
-        </>
-    )*/
 }

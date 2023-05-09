@@ -10,10 +10,10 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 export const Register = (props) => {
     
     const navigate_home = useNavigate('');
+    const navigate_login = useNavigate('');
+
     const {authenticated, login,register} = useContext(AuthContext);
-    const [firstname, setFirstName] = useState('');
-    const [lastname, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
 
@@ -34,7 +34,7 @@ export const Register = (props) => {
 
        // console.log("submit");
 
-        register(firstname,lastname,email,password);
+        register(username,password);
        
     }
 
@@ -47,27 +47,19 @@ export const Register = (props) => {
             <h2>Register</h2>
             <Form className="register-form" onSubmit={handleSubmit}>
 
-            <Form.Group controlId="formBasicFirsName">
-            <Form.Label htmlFor="fname">First name</Form.Label>
-            <Form.Control value={firstname} name="firstname" onChange={(e) => setFirstName(e.target.value)} id="firstname" placeholder="first Name" />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicLastName">
-            <Form.Label htmlFor="lastname">Last name</Form.Label>
-            <Form.Control value={lastname}  onChange={(e) => setLastName(e.target.value)}  placeholder="Doe" id="password" name="password" />
-            </Form.Group>
-
             <Form.Group>
-            <Form.Label htmlFor="email">Email</Form.Label>
-            <Form.Control value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+            <Form.Label htmlFor="username">Username</Form.Label>
+            <Form.Control value={username} name="username" onChange={(e) => setUsername(e.target.value)} id="username" placeholder="0x1337" />
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+
+           
+            <Form.Group >
             <Form.Label htmlFor="password">Password</Form.Label>
             <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             </Form.Group>
             <Button className="btn btn-light btn-outline-dark btn-lg" type="submit">Register</Button>
         </Form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
+        <button className="link-btn" onClick={() => navigate_login('/login')}>Already have an account? Login here.</button>
         </Col>
          <Col sm={6} className="col-2 " >
             <Mapb/>

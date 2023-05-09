@@ -21,7 +21,7 @@
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "reactstrap": "^9.1.9",
-    "swagger-autogen": "^2.8.0",
+    "swagger-autogen": "^2.23.1",
     "swagger-jsdoc": "^7.0.0-rc.6",
     "swagger-ui-express": "^4.6.3",
     "web-vitals": "^2.1.4",

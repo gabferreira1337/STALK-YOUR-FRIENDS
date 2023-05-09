@@ -18,12 +18,12 @@ export const AuthProvider = ({children}) => {     // pass everything inside Auth
 
 useEffect(()=> {          // comeca e os componentes sao renderizados sem esperar asincrono
 
-  const recoveredUser = localStorage.getItem("user");
+  const recoveredUser = localStorage.getItem("username");
   const token = localStorage.getItem("token");
 
   if(recoveredUser && token){
     setUser(JSON.parse(recoveredUser)); //
-    api.defaults.headers.Authorization = 'Bearer ${token}';
+    api.defaults.headers.Authorization = ' ${token}';
   }
 
   setLoading(false);  // ajuda no carregamento da pagina
@@ -31,27 +31,14 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
 },[]); // independente do estado
 
 
-const register = async (firstname,lastname,email,password) => {
+const register = async (username,password) => {
 
   try {
 
-    const response = await createUser(firstname,lastname,email,password);
-    const loggedUser = response.data.firstname;
-   // const token = response.data.token;
-      
-    // localStorage.setItem("user", JSON.stringify(loggedUser));   //save in the local storage 
-
-    // localStorage.setItem("token", token); 
-
-
-     //api.defaults.headers.Authorization = `Bearer ${token}`;
-
-     
-       setUser(loggedUser);
-      console.log("Navigating");
-       navigate('/');
-     
-    // console.log("register", response.data);
+    const response = await createUser(username,password);
+     // console.log("Navigating");
+       navigate('/login');
+   //   console.log("register", response);
      
    
   } catch (error) {
@@ -59,44 +46,35 @@ const register = async (firstname,lastname,email,password) => {
    
   }
 
-     
-
  };
 
 
   const login = async (username, password) => {
 
    try {
-    const response = await createSession(username, password);
+    const response = await createSession(username,password);
+    const loggedUser = response.username;
+    const token = response.token;
       
-      console.log("login", response.data);
-      
-    
+     localStorage.setItem("username", JSON.stringify(loggedUser));   //save in the local storage 
+
+     localStorage.setItem("token", token); 
+
+
+     api.defaults.headers.Authorization = `${token}`;
+
+     
+      setUser(loggedUser);
+     // console.log("Navigating");
+       navigate('/home');
+     
+   //  console.log("Login", response);
+     
    } catch (error) {
-      console.error('API request error:', error);
+    console.error('API request error:', error);
     
-   }
-      //const response = await createSession(username, password);
-      
-     // console.log("login", response.data);
-  
-
-      // api criar uma session
-
-      //const loggedUser = response.data.user;
-      //const token = response.data.token;
-       
-     /* localStorage.setItem("user", JSON.stringify(loggedUser));   //save in the local storage 
-
-      localStorage.setItem("token", token); 
-
-
-      api.defaults.headers.Authorization = 'Bearer ${token}';*/
-
-      
-       // setUser(loggedUser);
-        navigate('/');
-      
+  };
+    
       
   };
 
@@ -106,7 +84,7 @@ const register = async (firstname,lastname,email,password) => {
 
   const logout = () => {
     console.log("logout");
-    localStorage.removeItem("user");   // remove form local storage the credentials
+    localStorage.removeItem("username");   // remove form local storage the credentials
     localStorage.removeItem("token");
 
     api.defaults.headers.Authorization = null;      //set authorization to null;
