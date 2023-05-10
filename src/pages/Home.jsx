@@ -1,5 +1,8 @@
 import React, {useEffect, useContext,useState} from "react"
 import { AuthContext } from "../contexts/auth";
+import NavbAuth from "../components/Navbar_auth";
+import Mapb from "../components/Mapb";
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { getUsers } from "../services/api";
 
@@ -33,6 +36,7 @@ const HomePage = () => {
   return (
 
   <>
+    <NavbAuth/>
     <h1>Hello</h1>
     <button onClick={handleLogout}>Logout</button>
     <ul>
@@ -44,6 +48,7 @@ const HomePage = () => {
         ))
       }
     </ul>
+       
   </>
 
   );

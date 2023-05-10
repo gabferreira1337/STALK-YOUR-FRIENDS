@@ -22,7 +22,8 @@ useEffect(()=> {          // comeca e os componentes sao renderizados sem espera
   const token = localStorage.getItem("token");
 
   if(recoveredUser && token){
-    setUser(JSON.parse(recoveredUser)); //
+    //setUser(JSON.parse(recoveredUser)); //
+    setUser(recoveredUser);
     api.defaults.headers.Authorization = ' ${token}';
   }
 
@@ -66,7 +67,7 @@ const register = async (username,password) => {
      
       setUser(loggedUser);
      // console.log("Navigating");
-       navigate('/home');
+       navigate('/');
      
    //  console.log("Login", response);
      
@@ -83,7 +84,7 @@ const register = async (username,password) => {
     
 
   const logout = () => {
-    console.log("logout");
+   // console.log("logout");
     localStorage.removeItem("username");   // remove form local storage the credentials
     localStorage.removeItem("token");
 
