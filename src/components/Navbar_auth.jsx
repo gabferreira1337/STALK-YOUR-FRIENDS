@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import  "../styles/nav.css";
 import { AuthContext } from "../contexts/auth";
-import {Link} from "react-router-dom" ;
+
 
 
 
@@ -26,7 +26,7 @@ export default function NavbAuth() {
         <Navbar.Collapse className="text-white  me-auto"id="basic-navbar-nav">
           <Nav className=" me-auto " variant='light' >
             <NavDropdown className="about" title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Overview</NavDropdown.Item>
+              <NavDropdown.Item href="/account">Overview</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item  onClick={() => logout()}>
                 Logout

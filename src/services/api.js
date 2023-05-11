@@ -1,7 +1,11 @@
 import axios from "axios";
 
 
-//const URL = "http://127.0.0.1:5001"
+const locations = [];
+
+
+
+
 
 export const api = axios.create({
   baseURL: "https://api.secureme.me/api/v1/",
@@ -46,4 +50,69 @@ export const createUser = async (username, password) => {
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
+
+
+
+export const submitCoord = async (lat, lng) => {
+
+  const token = localStorage.getItem("token");
+
+  const data = {
+    "Latitude": lat,
+    "Longitude": lng
+  };
+  
+
+  console.log(token);
+
+ const config = {
+      headers: {Authorization: ` ${token}`}
+
+  };
+
+  console.log(lat, lng);
+ 
+  const response = await api.post('/position', data,config)
+  .then(response =>{
+     console.log(response.data);
+  })
+  
+.catch (error => {
+  throw new Error(error.response.data); // Throw an error with the error message from the API
+});
+};
+
+
+
+
+
+
+export const getHistory = async () => {
+
+  const token = localStorage.getItem("token");
+
+ 
+
+  console.log(token);
+
+ const config = {
+      headers: {Authorization: ` ${token}`}
+
+  };
+
+ 
+  const response = await api.post('/position/history',config)
+  .then(response =>{
+     console.log(response.data);
+     response.data.locations.forEach(location => {
+      locations.push(location);
+  })
+})
+  
+.catch (error => {
+  throw new Error(error.response.data); // Throw an error with the error message from the API
+});
+};
+
+export default locations;
 

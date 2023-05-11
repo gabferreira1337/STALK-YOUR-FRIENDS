@@ -1,11 +1,12 @@
 import React, {useEffect, useContext,useState} from "react"
 import { AuthContext } from "../contexts/auth";
 import NavbAuth from "../components/Navbar_auth";
-import Mapb from "../components/Mapb";
+import MapP from "../components/MapP";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { getUsers } from "../services/api";
-
+import Coordinates from "../components/Coordinates";
+import LocationComponent from "../components/MapP";
 
 
 const HomePage = () => {
@@ -14,15 +15,15 @@ const HomePage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+//  useEffect(() => {
 
-      (async () => {
-        const response = await getUsers();
-        setUsers(response.data);
-        setLoading(false);
+     /// (async () => {
+     // /  const response = await getUsers();
+      //  setUsers(response.data);
+     //   setLoading(false);
 
-      })();    //funcao anonima
-  },[]);
+    //  })();    //funcao anonima
+ // },[]);
 
   const handleLogout = () => {
 
@@ -33,22 +34,26 @@ const HomePage = () => {
     <div className="loading">Loading data...</div>;
   }
 
-  return (
-
-  <>
+  return(
+ <>
     <NavbAuth/>
-    <h1>Hello</h1>
-    <button onClick={handleLogout}>Logout</button>
-    <ul>
-      {
-        users.map((user) => (
-          <li>
-            {user._id} - {user.email}
-          </li>
-        ))
-      }
-    </ul>
-       
+    <Container className="container  d-flex " id="form-container">
+        <Row className="justify-content-between ">
+            <Col sm={6} className="" id="col-1">
+   
+
+    </Col>
+    <Col sm={6} className="col-2 " >
+
+  <MapP/>
+  </Col>
+  </Row>
+  </Container>
+
+    <Container className="container" id="form-container">
+          <Coordinates/>
+    </Container>
+    <LocationComponent/>
   </>
 
   );

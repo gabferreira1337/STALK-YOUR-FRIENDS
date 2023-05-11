@@ -37,8 +37,9 @@ import { getUsers } from "../services/api";
 
   <>
     <NavbAuth/>
+    <NavbAuth/>
     <h1>Hello</h1>
-    <button onClick={handleLogout}>Logout</button>
+    <h1>Hello</h1>
     <ul>
       {
         users.map((user) => (
@@ -55,4 +56,3 @@ import { getUsers } from "../services/api";
 
 };
 
-//export default HomePage;

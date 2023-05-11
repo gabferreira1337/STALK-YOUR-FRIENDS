@@ -2,10 +2,8 @@ import React, { useState, useContext } from "react";            // hook para gua
 import { AuthContext } from "../contexts/auth";
 import Navb from "../components/Navbar";
 import Mapb from "../components/Mapb";
-import axios from "axios";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import "../styles/login.css"
-import { getUsers } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 
@@ -35,7 +33,7 @@ export const Login = (props) => {
         }
         
 
-        console.log("Hello",{username, password});
+       // console.log("Hello",{username, password});
 
         login(username, password);             // context + api implementation
     }
