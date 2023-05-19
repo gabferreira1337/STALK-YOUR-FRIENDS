@@ -6,7 +6,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { getUsers } from "../services/api";
 import Coordinates from "../components/Coordinates";
-import LocationComponent from "../components/MapP";
+import LocationComponent from "../components/util";
 
 
 const HomePage = () => {
@@ -40,20 +40,21 @@ const HomePage = () => {
     <Container className="container  d-flex " id="form-container">
         <Row className="justify-content-between ">
             <Col sm={6} className="" id="col-1">
-   
+            <LocationComponent/>
 
     </Col>
     <Col sm={6} className="col-2 " >
 
-  <MapP/>
+    <MapP/>
   </Col>
   </Row>
   </Container>
 
     <Container className="container" id="form-container">
           <Coordinates/>
+          
     </Container>
-    <LocationComponent/>
+    
   </>
 
   );

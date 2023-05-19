@@ -6,16 +6,19 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '../styles/Mapb.css'
 
 
-
- export function LocationComponent() {
+/*
+ export  function LocationComponent() {
 
   const [locations, setLocations] = useState([]);
-  const token = localStorage.getItem.token;
+  const token = localStorage.getItem("token");
+
+  console.log(token);
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         const response = await getHistory(token); 
+        console.log(response);
         setLocations(response.data.locations);
       } catch (error) {
         console.error('Error fetching locations:', error);
@@ -26,7 +29,7 @@ import '../styles/Mapb.css'
     fetchLocations();
 
     // Fetch locations every 5 seconds (adjust the interval as needed)
-    const intervalId = setInterval(fetchLocations, 50000);
+    const intervalId = setInterval(fetchLocations, 5000);
 
     // Clean up the interval when the component is unmounted
     return () => {
@@ -48,7 +51,7 @@ import '../styles/Mapb.css'
     </div>
   );
 };
-
+*/
 
 
 

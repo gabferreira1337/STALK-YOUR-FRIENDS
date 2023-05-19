@@ -3,11 +3,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from 'react-router-dom';
 import  "../styles/nav.css";
 import { AuthContext } from "../contexts/auth";
-
-
-
 
 
 
@@ -16,6 +14,15 @@ import { AuthContext } from "../contexts/auth";
 export default function NavbAuth() {
 
   const {logout} = useContext(AuthContext);
+
+  const navigate_account = useNavigate();
+
+
+
+  function handleClick() {
+
+    navigate_account('/account');
+  }
 
     return(
 
@@ -26,7 +33,7 @@ export default function NavbAuth() {
         <Navbar.Collapse className="text-white  me-auto"id="basic-navbar-nav">
           <Nav className=" me-auto " variant='light' >
             <NavDropdown className="about" title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/account">Overview</NavDropdown.Item>
+              <NavDropdown.Item  onClick={() => handleClick()}>Overview</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item  onClick={() => logout()}>
                 Logout

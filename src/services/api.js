@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const locations = [];
+
 
 
 
@@ -53,7 +53,7 @@ export const createUser = async (username, password) => {
 
 
 
-export const submitCoord = async (lat, lng) => {
+export const submitCoord1 = async (lat, lng) => {
 
   const token = localStorage.getItem("token");
 
@@ -62,32 +62,126 @@ export const submitCoord = async (lat, lng) => {
     "Longitude": lng
   };
   
-
-  console.log(token);
+  //console.log("aqui vai o token");
+  //console.log(token);
 
  const config = {
-      headers: {Authorization: ` ${token}`}
+      headers: {Authorization: token}
 
   };
 
   console.log(lat, lng);
+
+  try {
  
   const response = await api.post('/position', data,config)
-  .then(response =>{
-     console.log(response.data);
-  })
+  console.log(response.data);
+ 
   
-.catch (error => {
+  }catch(error)  {
   throw new Error(error.response.data); // Throw an error with the error message from the API
-});
+};
 };
 
 
+export const getHistory = async (data_end,data_start) => {
+
+  const token = localStorage.getItem("token");
+
+  
+  const data = {
+
+    end : "2023-07-01",
+    start : "2021-07-01",
+  }
+
+ 
+
+  //console.log(typeof(token));
+
+ const config = {
+      headers: {Authorization: token}
+
+  };
+
+
+  try {
+    const response = await api.post('/position/history',data, config);
+   // console.log(response.data);
+    
+   
+  
+     return response;
+    
+    }
+
+   catch (error) {
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
 
 
 
+export const getUserInfo = async () => {
 
-export const getHistory = async () => {
+  const token = localStorage.getItem("token");
+
+
+ const config = {
+      headers: {Authorization: token}
+
+  };
+
+
+  try {
+    const response = await api.get('/user/info',config);
+   // console.log(response.data);
+
+     return response.data;
+    
+    }
+
+   catch (error) {
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
+
+
+export const deletePosition = async (id) => {
+
+  const token = localStorage.getItem("token");
+
+  console.log(id);
+
+ const config = {
+      headers: {Authorization: token}
+
+  };
+
+
+  try {
+    const response = await api.delete(`/position/${id}`,config);
+    //console.log(response.data);
+
+    alert('Localization deleted sucessfully');
+
+    // return response.data;
+    
+    }
+
+   catch (error) {
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
+
+
+/*export const getHistory = async () => {
 
   const token = localStorage.getItem("token");
 
@@ -106,13 +200,18 @@ export const getHistory = async () => {
      console.log(response.data);
      response.data.locations.forEach(location => {
       locations.push(location);
-  })
+  });
 })
   
-.catch (error => {
+  .catch (error => {
   throw new Error(error.response.data); // Throw an error with the error message from the API
 });
-};
+};*/
 
-export default locations;
+
+
+
+
+
+
 

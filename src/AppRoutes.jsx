@@ -13,7 +13,8 @@ import { Login } from "./pages/Login"
 import { Register } from "./pages/Register"
 import { AuthProvider, AuthContext } from "./contexts/auth"
 import  HomePage   from "./pages/Home"
-import  AccountPage   from "./pages/Home"
+import  AccountPage   from "./pages/Account"
+import {  useLocation } from 'react-router-dom';
 
 
 
@@ -24,25 +25,26 @@ const AppRoutes = () => {
   const Private = ({children}) => {
 
     const {authenticated, loading} = useContext(AuthContext);
-    console.log({authenticated});
+  //  console.log({authenticated});
+    const location = useLocation();
 
     if(loading){
-      console.log('hello');
+      //console.log('hello');
       return <div className="loading">Carregando...</div>;
 
     }
 
-    
-    console.log('hello');
-
+  
     if(!authenticated){     //if not authenticated
-      console.log('hello');
+     
       return <Navigate to="/login"/>;
     }
 
-    return children;
-
+      return children;
+  
+  
   }
+  
 
   return(
     <Router>
