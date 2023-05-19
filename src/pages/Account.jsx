@@ -5,6 +5,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { getUsers } from "../services/api";
 import UserLocationComponent from "../components/UserHistory";
+import FriendsList from "../components/FriendList";
 
 
 
@@ -22,9 +23,16 @@ import UserLocationComponent from "../components/UserHistory";
   return (
 
   <>
+  
     <NavbAuth/>
+    <div>
+    <Row>
+      <Col sm={6}>
     <UserLocationComponent/>
-       
+    </Col>
+    <FriendsList/>
+    </Row>
+    </div>
   </>
 
   );

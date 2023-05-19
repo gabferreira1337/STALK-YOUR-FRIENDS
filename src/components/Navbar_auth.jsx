@@ -26,13 +26,13 @@ export default function NavbAuth() {
 
     return(
 
-      <Navbar  className="navbar text-white "  expand="lg" id='nav'>
+      <Navbar  className="navbar text-white"  expand="lg" id='nav'>
       <Container>
-        <Navbar.Brand className="title" href="/">STALK YOUR FRIENDS</Navbar.Brand>
+        <Navbar.Brand className="title " href="/">STALK YOUR FRIENDS</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav text-white"  variant='light' />
         <Navbar.Collapse className="text-white  me-auto"id="basic-navbar-nav">
           <Nav className=" me-auto " variant='light' >
-            <NavDropdown className="about" title="Account" id="basic-nav-dropdown">
+            <NavDropdown className="about " title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item  onClick={() => handleClick()}>Overview</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item  onClick={() => logout()}>

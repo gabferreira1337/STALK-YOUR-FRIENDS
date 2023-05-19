@@ -1,6 +1,7 @@
 .title {
 
   color: aliceblue;
+  font-size: 2em; 
  
 }
 
@@ -8,6 +9,13 @@
 
   color: rgb(168, 192, 224);
 }
+
+.about{
+
+  font-size: 1.25em
+}
+
+
 
 .navbar-toggler{
   color: aliceblue;

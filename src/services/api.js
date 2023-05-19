@@ -2,11 +2,6 @@ import axios from "axios";
 
 
 
-
-
-
-
-
 export const api = axios.create({
   baseURL: "https://api.secureme.me/api/v1/",
 
@@ -53,33 +48,36 @@ export const createUser = async (username, password) => {
 
 
 
-export const submitCoord1 = async (lat, lng) => {
+export const submitCoord = async (lat, lng) => {
 
   const token = localStorage.getItem("token");
 
   const data = {
-    "Latitude": lat,
-    "Longitude": lng
-  };
-  
-  //console.log("aqui vai o token");
-  //console.log(token);
+    "Latitude": parseFloat(lat),
+    "Longitude": parseFloat(lng)
 
+  };
+
+  
  const config = {
       headers: {Authorization: token}
 
   };
 
-  console.log(lat, lng);
 
   try {
  
-  const response = await api.post('/position', data,config)
-  console.log(response.data);
+  const response = await api.post('/position', data,config);
+
+  alert("Localization added with sucess!!!");
+
+  window.location.reload();
  
   
   }catch(error)  {
+    alert("Couldn't add location");
   throw new Error(error.response.data); // Throw an error with the error message from the API
+  
 };
 };
 
@@ -181,32 +179,61 @@ export const deletePosition = async (id) => {
 }
 
 
-/*export const getHistory = async () => {
+export const getFollowers = async () => {
 
   const token = localStorage.getItem("token");
 
- 
-
-  console.log(token);
-
  const config = {
-      headers: {Authorization: ` ${token}`}
+      headers: {Authorization: token}
 
   };
 
- 
-  const response = await api.post('/position/history',config)
-  .then(response =>{
-     console.log(response.data);
-     response.data.locations.forEach(location => {
-      locations.push(location);
-  });
-})
-  
-  .catch (error => {
-  throw new Error(error.response.data); // Throw an error with the error message from the API
-});
-};*/
+
+  try {
+    const response = await api.get('/follower',config);
+   // console.log(response.data);
+    // return response;
+    }
+
+   catch (error) {
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
+
+
+
+
+export const addFriend = async (id) => {
+
+  const token = localStorage.getItem("token");
+
+  console.log(typeof(id));
+
+ const config = {
+      headers: {Authorization: token}
+
+  };
+
+
+  try {
+    const response = await api.post('/follower',{FollowerUserID: parseInt(id)},config);
+    //console.log(response.data);
+
+    alert("User " + id + " Added");
+
+    // return response.data;
+    
+    }
+
+   catch (error) {
+    alert("Can't add user: " + id);
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
 
 
 
