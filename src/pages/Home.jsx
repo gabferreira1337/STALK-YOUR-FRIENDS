@@ -49,11 +49,10 @@ const HomePage = () => {
   </Col>
   </Row>
   </Container>
-
-    <Container className="container" id="form-container">
+      
           <Coordinates/>
           
-    </Container>
+
     
   </>
 
