@@ -25,13 +25,6 @@ export default function Coordinates() {
 
 
 
-  const HandleSub = () => {
-
-    submitCoord(lat, lng);
-
-  }
-  
-
 
 
 

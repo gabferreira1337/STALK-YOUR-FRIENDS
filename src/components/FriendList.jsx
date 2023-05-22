@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import axios from "axios";
 import { useState, useEffect,useRef } from 'react';
-import { api } from '../services/api';
+import { api, unfollowfriend } from '../services/api';
 import '../styles/FriendsList.css';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import AddFriend from './AddFriend';
@@ -50,6 +50,19 @@ const fetchUsers = async () =>{
 }
 
 
+ const  handle_event_click = (e) => {
+
+  //console.log(e);
+
+  unfollowfriend(e);
+
+}
+
+
+
+
+
+
   return (
 
     <>
@@ -57,9 +70,7 @@ const fetchUsers = async () =>{
       {users.map((user) => (
         <>
          <ListItem alignItems="flex-start" key ={user.id}>
-         <ListItemAvatar>
-           <Avatar alt={"" + user.username} src="/static/images/avatar/1.jpg" />
-         </ListItemAvatar>
+         
          <ListItemText className='list-text'
            primary={
             <Typography
@@ -73,6 +84,7 @@ const fetchUsers = async () =>{
           }
            secondary={"ID: "+ user.id}
          />
+     <Button className='btn btn-sm' onClick={() =>handle_event_click(user.id)}>UNFOLLOW</Button>
        </ListItem>
        <Divider variant="inset" component="li" />
        </>

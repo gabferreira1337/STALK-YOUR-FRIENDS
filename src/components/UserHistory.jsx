@@ -40,7 +40,7 @@ export default function UserLocationComponent() {
 
 
   const handleClick = (e) => {
-    console.log(e);
+   // console.log(e);
   
     deletePosition(e);
   }

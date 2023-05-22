@@ -18,8 +18,7 @@ export default function AddFriend() {
    // console.log(userFriend);
    
     addFriend(userFriend);
-
-
+  
 
   }
 

@@ -209,7 +209,7 @@ export const addFriend = async (id) => {
 
   const token = localStorage.getItem("token");
 
-  console.log(typeof(id));
+ // console.log(typeof(id));
 
  const config = {
       headers: {Authorization: token}
@@ -223,6 +223,8 @@ export const addFriend = async (id) => {
 
     alert("User " + id + " Added");
 
+    window.location.reload();
+
     // return response.data;
     
     }
@@ -235,6 +237,38 @@ export const addFriend = async (id) => {
 
 }
 
+
+export const unfollowfriend = async (id) => {
+
+  const token = localStorage.getItem("token");
+
+// console.log(token);
+
+ const config = {
+      headers: {Authorization: token}
+
+  };
+
+
+  try {
+    const response = await api.delete('/follower',{FollowerUserID: parseInt(id)},config);
+    //console.log(response.data);
+
+    alert("User " + id + " Unfollowed");
+
+    window.location.reload();
+
+    // return response.data;
+    
+    }
+
+   catch (error) {
+    alert("Can't unfollow user: " + id + "Try again later");
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+
+
+}
 
 
 
