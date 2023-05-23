@@ -25,7 +25,7 @@ export default function LocationComponent() {
 
  let handleClick = (e) => {
 
-  //e.prevent.default
+  e.preventDefault();
 
   
 

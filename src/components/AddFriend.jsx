@@ -14,8 +14,10 @@ export default function AddFriend() {
   const [userFriend, setUserFriend] = useState();
 
 
-  const handle_Click = () => {
+  const handle_Click = (e) => {
    // console.log(userFriend);
+
+   e.preventDefault();
    
     addFriend(userFriend);
   

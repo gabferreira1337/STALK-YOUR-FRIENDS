@@ -41,7 +41,7 @@ export default function UserLocationComponent() {
 
   const handleClick = (e) => {
    // console.log(e);
-  
+  //e.preventDefault();
     deletePosition(e);
   }
 

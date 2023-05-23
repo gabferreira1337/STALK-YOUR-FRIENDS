@@ -53,7 +53,7 @@ const fetchUsers = async () =>{
  const  handle_event_click = (e) => {
 
   //console.log(e);
-
+//e.preventDefault();
   unfollowfriend(e);
 
 }

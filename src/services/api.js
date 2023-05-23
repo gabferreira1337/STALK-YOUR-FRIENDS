@@ -71,7 +71,6 @@ export const submitCoord = async (lat, lng) => {
 
   alert("Localization added with sucess!!!");
 
-  window.location.reload();
  
   
   }catch(error)  {
@@ -223,7 +222,7 @@ export const addFriend = async (id) => {
 
     alert("User " + id + " Added");
 
-    window.location.reload();
+  
 
     // return response.data;
     
@@ -256,7 +255,7 @@ export const unfollowfriend = async (id) => {
 
     alert("User " + id + " Unfollowed");
 
-    window.location.reload();
+  
 
     // return response.data;
     
