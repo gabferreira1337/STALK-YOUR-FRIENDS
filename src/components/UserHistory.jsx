@@ -23,7 +23,7 @@ export default function UserLocationComponent() {
     // Fetch locations initially
     fetchLocations();
 
-    // Fetch locations every 5 seconds (adjust the interval as needed)
+    // Fetch locations every 5 seconds 
     const intervalId = setInterval(fetchLocations, 5000);
 
     // Clean up the interval when the component is unmounted
@@ -75,7 +75,7 @@ export default function UserLocationComponent() {
           </div>
           <br />
           <br />
-          <table class="table text-light ">
+          <table className="table text-light ">
             <thead>
               <tr>
                 <th scope="col">Date</th>

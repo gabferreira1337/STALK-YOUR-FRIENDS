@@ -1,11 +1,12 @@
 import React, { useEffect, useContext, useState } from "react";
-import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/nav.css";
 import { AuthContext } from "../contexts/auth";
+import  SOS  from "../components/SOS";
 
 export default function NavbAuth() {
   const { logout } = useContext(AuthContext);
@@ -18,7 +19,7 @@ export default function NavbAuth() {
 
   return (
     <Navbar className="navbar text-white" expand="lg" id="nav">
-      <Container>
+      <Container className="nav-auth">
         <Navbar.Brand className="title " href="/">
           STALK YOUR FRIENDS
         </Navbar.Brand>
@@ -26,6 +27,7 @@ export default function NavbAuth() {
           aria-controls="basic-navbar-nav text-white"
           variant="light"
         />
+        
         <Navbar.Collapse className="text-white  me-auto" id="basic-navbar-nav">
           <Nav className=" me-auto " variant="light">
             <NavDropdown

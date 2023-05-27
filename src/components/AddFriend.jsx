@@ -15,21 +15,23 @@ export default function AddFriend() {
     addFriend(userFriend);
   };
 
+  
+
   return (
     <>
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           placeholder=""
           aria-label=""
           aria-describedby="basic-addon1"
           value={userFriend}
           onChange={(e) => setUserFriend(e.target.value)}
         />
-        <div class="input-group">
+        <div className="input-group">
           <button
-            class="btn btn-outline-secondary"
+            className="btn btn-outline-secondary"
             type="button"
             onClick={handle_Click}
           >

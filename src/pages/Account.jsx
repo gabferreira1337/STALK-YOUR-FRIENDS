@@ -6,6 +6,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { getUsers } from "../services/api";
 import UserLocationComponent from "../components/UserHistory";
 import FriendsList from "../components/FriendList";
+import Followers from "../components/Followers";
 
 const AccountPage = () => {
   const { logout } = useContext(AuthContext);
@@ -21,10 +22,15 @@ const AccountPage = () => {
       <NavbAuth />
       <div>
         <Row>
-          <Col sm={6}>
+          <Col sm={6} className="">
             <UserLocationComponent />
           </Col>
+          <Col sm={8}>
           <FriendsList />
+          </Col>
+          <Col sm={4}>
+          <Followers/>
+          </Col>
         </Row>
       </div>
     </>

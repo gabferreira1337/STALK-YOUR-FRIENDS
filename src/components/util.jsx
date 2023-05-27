@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback, useMemo } from "react";
 import { deletePosition, getHistory } from "../services/api";
-import mapboxgl from "mapbox-gl";
-
+import  SOS  from "../components/SOS";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
-
+import { api } from "../services/api";
 import "../styles/Mapb.css";
 import FilterHistory from "./Filter";
 
@@ -17,37 +15,97 @@ export default function LocationComponent({ addedValue }) {
   const [startDate, setStartDate] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
+  const [valuef, setValuef] = useState({});
+  
+  const [flag, setFlag] = useState(false);
 
   //console.log(token);
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await getHistory();
-        //console.log(response);
-
-        setLocations(response.data.locations);
-      } catch (error) {
-        console.error("Error fetching locations:", error);
+    
+    // Fetch locations initially
+    const fetchData = async () => {
+       fetchUsers();
+  
+      const userData = Object.values(valuef);
+      const allLocations = [];
+  
+      console.log(userData)
+      for (const user of userData) {
+        const config = {
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        
+       // console.log("Hello");
+        const data = {
+          end: '2030-07-01',
+          start: '2021-07-01',
+          userID: user.id,
+        };
+       // console.log("Hello");
+        try {
+          const response = await api.post('/position/history/user', data, config);
+          allLocations.push(...response.data.locations);
+        } catch (error) {
+          console.error(error);
+        }
       }
+  
+      setLocations(allLocations);
+    };
+  
+    // Fetch locations initially
+    fetchData();
+  
+    // Fetch locations every 5 seconds
+    const intervalId = setInterval(fetchData, 5000);
+  
+    // Clean up the interval when the component is unmounted
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+    
+
+
+  
+  const fetchUsers = async () => {
+
+    const token = localStorage.getItem("token"); 
+
+    const config = {
+
+      headers: { Authorization: token },
+
     };
 
-    // Fetch locations initially
-    fetchLocations();
+    try {
 
-    // Fetch locations every 5 seconds (adjust the interval as needed)
-    //const intervalId = setInterval(fetchLocations, 50000);
+      const response = await api.get("/follower/", config);
 
-    // Clean up the interval when the component is unmounted
-    // return () => {
-    // clearInterval(intervalId);
-    //};
-  }, [addedValue]);
+       //console.log(response.data);
+      // return response;
+      setValuef(response.data.data);
+      
+      //console.log(response.data);
+    } catch (error) {
 
-  // console.log("hello" + locations);
+      throw new Error(error.response.data); // Throw an error with the error message from the API
+    }
+  };
+
+ 
+  //console.log(userData);
+
+ // console.log(locations);
 
   return (
     <>
+    <SOS/>
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}

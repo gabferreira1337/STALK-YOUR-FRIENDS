@@ -167,12 +167,11 @@ export const unfollowfriend = async (id) => {
   // console.log(token);
 
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   };
 
   try {
-    const response = await api.delete(
-      "/follower/",
+    const response = await api.delete( "/follower/",
       { FollowerUserID: id },
       config
     );
@@ -183,6 +182,126 @@ export const unfollowfriend = async (id) => {
     // return response.data;
   } catch (error) {
     alert("Can't unfollow user: " + id + "Try again later");
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+
+
+
+ 
+export const fetchUsersHistory = async (id,data_start, data_end) => {
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: { 
+      accept: 'application/json',
+      Authorization: `Bearer ${token}` ,
+    },
+  };
+
+  
+
+  const data = {
+    end: "2030-07-01",
+    start: "2021-07-01",
+    userID: id
+  };
+
+  
+
+  try {
+    const response = await api.post("/position/history/user", data, config);
+
+    console.log(response.data.locations);
+
+    console.log(typeof(response.data.locations))
+  
+  
+    return response.data.locations;
+
+    
+
+  } catch (error) {
+
+    alert("Can't check user " + id + " history");
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+
+
+
+export const getsos = async () => {
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: { 
+      accept: 'application/json',
+      Authorization: `Bearer ${token}` ,
+    },
+  };
+
+  
+
+  const data = {
+    end: "2030-07-01",
+    start: "2021-07-01",
+    
+  };
+
+  
+
+  try {
+    const response = await api.post("/position/history/user", data, config);
+
+    console.log(response.data.locations);
+
+    console.log(typeof(response.data.locations))
+  
+  
+    return response.data.locations;
+
+    
+
+  } catch (error) {
+
+    alert("Can't check user "  + " history");
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+
+
+
+
+export const getfollowing = async () => {
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: { 
+      accept: 'application/json',
+      Authorization: `Bearer ${token}` ,
+    },
+  };
+
+  
+  
+
+  try {
+    const response = await api.get("/follower/following", config);
+
+   // console.log(response.data);
+
+   // console.log(typeof(response.data.locations))
+  
+  
+    return response.data;
+
+    
+
+  } catch (error) {
+
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };

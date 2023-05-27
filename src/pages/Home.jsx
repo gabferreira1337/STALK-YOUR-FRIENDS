@@ -3,10 +3,11 @@ import { AuthContext } from "../contexts/auth";
 import NavbAuth from "../components/Navbar_auth";
 import MapP from "../components/MapP";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-
+import  SOS  from "../components/SOS";
 import { getUsers } from "../services/api";
 import Coordinates from "../components/Coordinates";
 import LocationComponent from "../components/util";
+
 
 const HomePage = () => {
   const { logout } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   const [addedValue, setAddedValue] = useState("");
+  
 
   //  useEffect(() => {
 
@@ -24,6 +26,11 @@ const HomePage = () => {
 
   //  })();    //funcao anonima
   // },[]);
+
+  
+
+  //console.log(userData);
+  //console.log(typeof(userData));
 
   const handleLogout = () => {
     logout();

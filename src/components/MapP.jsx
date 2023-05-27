@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { getHistory } from "../services/api";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/Mapb.css";
+import SOS from "../components/SOS";
 
 /*
  export  function LocationComponent() {
@@ -141,9 +142,21 @@ const MapP = () => {
 
   return (
     <>
-      <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+      
+        <Row>
+          <Col>
+          <div className="sidebar">
+            Longitude: {lng} Latitude: {lat} Zoom: {zoom}
+            </div>
+          </Col>
+          <div>
+          <SOS />
+          </div>
+        </Row>
+      <div>
+        <SOS />
       </div>
+
       <div ref={mapContainer} className="map-container" />
     </>
   );
