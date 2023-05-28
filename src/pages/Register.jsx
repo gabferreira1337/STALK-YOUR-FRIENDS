@@ -27,7 +27,6 @@ export const Register = (props) => {
     e.preventDefault();
 
     if (!validatePassword()) {
-      
       return;
     }
 

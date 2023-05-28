@@ -12,20 +12,16 @@ export default function SOS_B() {
 
     sosMode();
 
-    
+    //getuserslocat();
   };
 
   return (
-    
-         
-        <Button
-          className="btn btn-danger  btn-lg"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          ACTIVATE SOS
-        </Button>
-        
-  
+    <Button
+      className="btn btn-danger  btn-lg"
+      type="submit"
+      onClick={handleSubmit}
+    >
+      ACTIVATE SOS
+    </Button>
   );
 }

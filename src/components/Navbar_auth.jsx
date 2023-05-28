@@ -6,7 +6,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/nav.css";
 import { AuthContext } from "../contexts/auth";
-import  SOS  from "../components/SOS";
+import SOS from "../components/SOS";
 
 export default function NavbAuth() {
   const { logout } = useContext(AuthContext);
@@ -27,7 +27,7 @@ export default function NavbAuth() {
           aria-controls="basic-navbar-nav text-white"
           variant="light"
         />
-        
+
         <Navbar.Collapse className="text-white  me-auto" id="basic-navbar-nav">
           <Nav className=" me-auto " variant="light">
             <NavDropdown

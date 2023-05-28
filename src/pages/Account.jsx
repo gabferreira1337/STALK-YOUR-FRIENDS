@@ -26,10 +26,10 @@ const AccountPage = () => {
             <UserLocationComponent />
           </Col>
           <Col sm={8}>
-          <FriendsList />
+            <FriendsList />
           </Col>
           <Col sm={4}>
-          <Followers/>
+            <Followers />
           </Col>
         </Row>
       </div>

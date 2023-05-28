@@ -11,22 +11,19 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import AddFriend from "./AddFriend";
 import CheckLocations from "./CheckLocations";
 
-
 export default function FriendsList() {
-
   const [users, setUsers] = useState([]);
   const [usersLocations, setUsersLocations] = useState([]);
   const [changevar, setChangevar] = useState(1);
 
-
-/*  useEffect(() => {
+  /*  useEffect(() => {
     fetchUsers();
   }, [changevar]);
 */
 
-useEffect(() => {
-  fetchUsers();
-}, []);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const fetchUsers = async () => {
     const token = localStorage.getItem("token");
@@ -38,7 +35,6 @@ useEffect(() => {
     try {
       const response = await api.get("/follower/", config);
 
-     
       // console.log(response.data);
       // return response;
 
@@ -57,65 +53,62 @@ useEffect(() => {
     unfollowfriend(e);
   };
 
-
-
-
-
   const handle_check_locations = (id) => {
-   
-
-    setUsersLocations(() => fetchUsersHistory(id).then((resolved)=> {
-      setUsersLocations(resolved);
-    }));
-
-  
-  }
-
+    setUsersLocations(() =>
+      fetchUsersHistory(id).then((resolved) => {
+        setUsersLocations(resolved);
+      })
+    );
+  };
 
   return (
     <>
-    <Row>
-      <Col sm={9}>
-    <CheckLocations usersLocations = {usersLocations} />
-    </Col>
-    <h2>Friends </h2>
-    <Col sm={13}>
-      <List className="friends-list" sx={{ width: "100%", maxWidth: 260 }}>
-        {users.map((user) => (
-          <>
-            <ListItem alignItems="flex-start" key={user.id}>
-              <ListItemText
-                className="list-text"
-                primary={
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="black"
+      <Row>
+        <Col sm={9}>
+          <CheckLocations usersLocations={usersLocations} />
+        </Col>
+        <h2>Friends </h2>
+        <Col sm={13}>
+          <List className="friends-list" sx={{ width: "100%", maxWidth: 260 }}>
+            {users.map((user) => (
+              <>
+                <ListItem alignItems="flex-start" key={user.id}>
+                  <ListItemText
+                    className="list-text"
+                    primary={
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="black"
+                      >
+                        Username: {user.username}
+                      </Typography>
+                    }
+                    secondary={"ID: " + user.id}
+                  />
+                  <Button
+                    className="btn btn-sm"
+                    onClick={(e) => handle_event_click_unfollow(user.id)}
+                    type="button"
                   >
-                    Username: {user.username}
-                  </Typography>
-                  
-                }
-                secondary={"ID: " + user.id}
-              />
-              <Button
-                className="btn btn-sm"
-                onClick={(e) => handle_event_click_unfollow(user.id)}
-              type="button">
-                UNFOLLOW
-              </Button>
-          
+                    UNFOLLOW
+                  </Button>
+                </ListItem>
+                <Button
+                  className="btn btn-sm"
+                  onClick={() => handle_check_locations(user.id)}
+                >
+                  CheckLocations
+                </Button>
+                <Divider variant="inset" component="li" />
+              </>
+            ))}
+            <ListItem alignItems="flex-start">
+              <AddFriend />
             </ListItem>
-            <Button className="btn btn-sm" onClick={() => handle_check_locations(user.id)}>CheckLocations</Button>
-            <Divider variant="inset" component="li" />
-          </>
-        ))}
-        <ListItem alignItems="flex-start">
-          <AddFriend />
-        </ListItem>
-      </List>
-      </Col>
+          </List>
+        </Col>
       </Row>
     </>
   );

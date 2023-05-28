@@ -22,28 +22,22 @@ export default function FastCoordinates({ setAddedValue }) {
           submitCoord(lat, lng);
         },
         (error) => {
-
           alert("This browser doesn't support this feature");
           console.error(error);
         }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      console.error("Geolocation is not supported by this browser.");
     }
   };
 
- 
-
-
   return (
-    
-      
-        <Button
-          className="btn btn-light btn-outline-dark btn-lg"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Fast Submit
-        </Button>
+    <Button
+      className="btn btn-light btn-outline-dark btn-lg"
+      type="submit"
+      onClick={handleSubmit}
+    >
+      Fast Submit
+    </Button>
   );
 }

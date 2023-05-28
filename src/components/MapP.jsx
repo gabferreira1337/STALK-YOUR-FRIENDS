@@ -94,7 +94,7 @@ const MapP = () => {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-    const geojson = {
+    /* const geojson = {
       type: "FeatureCollection",
       features: [
         {
@@ -120,9 +120,9 @@ const MapP = () => {
           },
         },
       ],
-    };
+    };*/
 
-    for (const feature of geojson.features) {
+    /* for (const feature of geojson.features) {
       // create a HTML element for each feature
       const el = document.createElement("div");
       el.className = "marker";
@@ -137,7 +137,7 @@ const MapP = () => {
             )
         )
         .addTo(map.current);
-    }
+    }*/
   });
 
   return (

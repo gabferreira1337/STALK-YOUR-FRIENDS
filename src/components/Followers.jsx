@@ -9,7 +9,6 @@ import { getfollowing } from "../services/api";
 import "../styles/FriendsList.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
-
 export default function Followers() {
   const [following, setFollowing] = useState({});
 

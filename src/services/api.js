@@ -171,7 +171,8 @@ export const unfollowfriend = async (id) => {
   };
 
   try {
-    const response = await api.delete( "/follower/",
+    const response = await api.delete(
+      "/follower/",
       { FollowerUserID: id },
       config
     );
@@ -186,201 +187,133 @@ export const unfollowfriend = async (id) => {
   }
 };
 
-
-
- 
-export const fetchUsersHistory = async (id,data_start, data_end) => {
-
+export const fetchUsersHistory = async (id, data_start, data_end) => {
   const token = localStorage.getItem("token");
 
   const config = {
-    headers: { 
-      accept: 'application/json',
-      Authorization: `Bearer ${token}` ,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
   };
-
-  
 
   const data = {
     end: "2030-07-01",
     start: "2021-07-01",
-    userID: id
+    userID: id,
   };
-
-  
 
   try {
     const response = await api.post("/position/history/user", data, config);
 
-   // console.log(response.data.locations);
+    // console.log(response.data.locations);
 
-   // console.log(typeof(response.data.locations))
-  
-  
+    // console.log(typeof(response.data.locations))
+
     return response.data.locations;
-
-    
-
   } catch (error) {
-
     alert("Can't check user " + id + " history");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
 
-
-
 export const getsos = async () => {
-
   const token = localStorage.getItem("token");
 
   const config = {
-    headers: { 
-      accept: 'application/json',
-      Authorization: `Bearer ${token}` ,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
   };
-
-  
 
   const data = {
     end: "2030-07-01",
     start: "2021-07-01",
-    
   };
-
-  
 
   try {
     const response = await api.post("/position/history/user", data, config);
 
     //console.log(response.data.locations);
 
-   // console.log(typeof(response.data.locations))
-  
-  
+    // console.log(typeof(response.data.locations))
+
     return response.data.locations;
-
-    
-
   } catch (error) {
-
-    alert("Can't check user "  + " history");
+    alert("Can't check user " + " history");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
 
-
-
-
 export const getfollowing = async () => {
-
   const token = localStorage.getItem("token");
 
   const config = {
-    headers: { 
-      accept: 'application/json',
-      Authorization: `Bearer ${token}` ,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
   };
-
-  
 
   try {
     const response = await api.get("/follower/following", config);
 
-   // console.log(response.data);
+    // console.log(response.data);
 
-   // console.log(typeof(response.data.locations))
-  
-  
+    // console.log(typeof(response.data.locations))
+
     return response.data;
-
-    
-
   } catch (error) {
-
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
 
-
-
-
 export const sosMode = async () => {
-
   const token = localStorage.getItem("token");
 
   const config = {
-    headers: { 
-      accept: 'application/json',
+    headers: {
+      accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
 
-
-//  console.log(config.headers.Authorization)
-  
-  
+  //  console.log(config.headers.Authorization)
 
   try {
     const response = await api.post("/user/sos", config);
 
-   // console.log(response.data);
+    // console.log(response.data);
 
-   // console.log(typeof(response.data.locations))
-  
-   alert("SOS ACTIVATED");
+    // console.log(typeof(response.data.locations))
+
+    alert("SOS ACTIVATED");
     return response.data;
-
-   
-    
-
   } catch (error) {
-
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
 
-
-
-
-
-
-
-
-
 export const getUsersName = async (username) => {
-
   const token = localStorage.getItem("token");
 
   const config = {
-    headers: { 
-      accept: 'application/json',
+    headers: {
+      accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
-
-  
-  
 
   try {
     const response = await api.get(`/user/search/${username}`, config);
 
     console.log(response.data);
 
-   // console.log(typeof(response.data.locations))
-  
-  
+    // console.log(typeof(response.data.locations))
+
     return response.data;
-
-   
-    
-
   } catch (error) {
-
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
-

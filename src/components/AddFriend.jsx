@@ -6,7 +6,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 export default function AddFriend() {
   const [userFriend, setUserFriend] = useState();
-  const[usernames,  setUsernames] = useState([]);
+  const [usernames, setUsernames] = useState([]);
 
   const handle_Click = (e) => {
     // console.log(userFriend);
@@ -29,12 +29,9 @@ export default function AddFriend() {
     fetchUsernames();
   }, [userFriend]);
 
-  const usernamesArray = usernames.users
+  const usernamesArray = usernames.users;
 
- //console.log(usernames.users);
-
-
-  
+  //console.log(usernames.users);
 
   return (
     <>
@@ -48,19 +45,20 @@ export default function AddFriend() {
           value={userFriend}
           onChange={(e) => setUserFriend(e.target.value)}
         />
-        
+
         <div className="input-group">
-        <div className="usernames-scrollable">
-        {usernamesArray && usernamesArray.length > 0 ? (
-        <ul>
-          {userFriend && usernamesArray.map((username, index) => (
-            <li key={index}>{username.username}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No usernames found.</p>
-      )}
-      </div>
+          <div className="usernames-scrollable">
+            {usernamesArray && usernamesArray.length > 0 ? (
+              <ul>
+                {userFriend &&
+                  usernamesArray.map((username, index) => (
+                    <li key={index}>{username.username}</li>
+                  ))}
+              </ul>
+            ) : (
+              <p>No usernames found.</p>
+            )}
+          </div>
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -69,7 +67,7 @@ export default function AddFriend() {
             ADD FRIEND
           </button>
         </div>
-        </div>
+      </div>
     </>
   );
 }

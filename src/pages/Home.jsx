@@ -3,13 +3,12 @@ import { AuthContext } from "../contexts/auth";
 import NavbAuth from "../components/Navbar_auth";
 import MapP from "../components/MapP";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import  SOS  from "../components/SOS";
+import SOS from "../components/SOS";
 import { getUsers } from "../services/api";
 import Coordinates from "../components/Coordinates";
-import LocationComponent from "../components/util";
+import LocationComponent from "../components/FollowersLoc";
 import SOS_B from "../components/SOSB";
 import FastCoordinates from "../components/FastCoordinates";
-
 
 const HomePage = () => {
   const { logout } = useContext(AuthContext);
@@ -17,22 +16,6 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   const [addedValue, setAddedValue] = useState("");
-  
-
-  //  useEffect(() => {
-
-  /// (async () => {
-  // /  const response = await getUsers();
-  //  setUsers(response.data);
-  //   setLoading(false);
-
-  //  })();    //funcao anonima
-  // },[]);
-
-  
-
-  //console.log(userData);
-  //console.log(typeof(userData));
 
   const handleLogout = () => {
     logout();
@@ -58,10 +41,10 @@ const HomePage = () => {
 
       <Coordinates setAddedValue={setAddedValue} />
       <Row>
-      <FastCoordinates/>
+        <FastCoordinates />
       </Row>
       <Row>
-        <SOS_B/>
+        <SOS_B />
       </Row>
     </>
   );

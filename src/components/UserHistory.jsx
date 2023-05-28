@@ -23,7 +23,7 @@ export default function UserLocationComponent() {
     // Fetch locations initially
     fetchLocations();
 
-    // Fetch locations every 5 seconds 
+    // Fetch locations every 5 seconds
     const intervalId = setInterval(fetchLocations, 5000);
 
     // Clean up the interval when the component is unmounted
@@ -33,7 +33,6 @@ export default function UserLocationComponent() {
   }, []); // Empty dependency array to only run the effect once
 
   const handleClick = (e, locationID) => {
-   
     e.preventDefault(e);
     deletePosition(locationID);
   };
@@ -94,7 +93,7 @@ export default function UserLocationComponent() {
                     <Button
                       className="btn btn-sm btn-danger"
                       type="submit"
-                      onClick={(e) => handleClick(e,location.ID)}
+                      onClick={(e) => handleClick(e, location.ID)}
                     >
                       DELETE
                     </Button>

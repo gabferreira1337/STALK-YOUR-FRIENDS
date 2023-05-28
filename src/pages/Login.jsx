@@ -12,14 +12,13 @@ export const Login = (props) => {
   const navigate_register = useNavigate();
   const { authenticated, login } = useContext(AuthContext);
 
-  const [username, setUsername] = useState(""); 
-  const [password, setPassword] = useState(""); 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const validatePassword = () => {
-    
     const passRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/
-    
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/;
+
     return passRegex.test(password);
   };
 
@@ -27,9 +26,8 @@ export const Login = (props) => {
     e.preventDefault();
 
     if (!validatePassword()) {
-
       alert("Password invalid");
-      
+
       return;
     }
 
@@ -43,7 +41,7 @@ export const Login = (props) => {
         <Row className="justify-content-between ">
           <Col sm={6} className="" id="col-1">
             <h2>Welcome Back!</h2>
-            <Form className="login-form " >
+            <Form className="login-form ">
               <Form.Group>
                 <Form.Label htmlFor="username">Username</Form.Label>
                 <Form.Control
@@ -66,12 +64,12 @@ export const Login = (props) => {
                   id="password"
                   name="password"
                 />
-              
               </Form.Group>
 
               <Button
                 className="btn btn-light btn-outline-dark btn-lg"
-                type="button" onClick={handleSubmit}
+                type="button"
+                onClick={handleSubmit}
               >
                 Log In
               </Button>

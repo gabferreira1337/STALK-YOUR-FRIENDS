@@ -1,14 +1,11 @@
-.friends-list{
-
-
-color: black;
-background-color: aliceblue;
-
+.friends-list {
+  color: black;
+  background-color: aliceblue;
 }
 
 .usernames-scrollable {
   max-height: 20rem;
   overflow-y: auto;
   max-width: 10000px;
-  overflow-x:auto;
+  overflow-x: auto;
 }
