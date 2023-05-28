@@ -19,9 +19,14 @@ export default function FriendsList() {
   const [changevar, setChangevar] = useState(1);
 
 
-  useEffect(() => {
+/*  useEffect(() => {
     fetchUsers();
   }, [changevar]);
+*/
+
+useEffect(() => {
+  fetchUsers();
+}, []);
 
   const fetchUsers = async () => {
     const token = localStorage.getItem("token");
@@ -63,19 +68,8 @@ export default function FriendsList() {
       setUsersLocations(resolved);
     }));
 
-    //console.log(usersLocations);
-
-   //it  console.log(typeof(usersLocations));
+  
   }
-
-
-
-
-
-  //console.log(userData);
-
-
-
 
 
   return (
@@ -122,7 +116,6 @@ export default function FriendsList() {
         </ListItem>
       </List>
       </Col>
-    
       </Row>
     </>
   );

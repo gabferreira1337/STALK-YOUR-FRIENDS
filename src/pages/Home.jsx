@@ -7,6 +7,8 @@ import  SOS  from "../components/SOS";
 import { getUsers } from "../services/api";
 import Coordinates from "../components/Coordinates";
 import LocationComponent from "../components/util";
+import SOS_B from "../components/SOSB";
+import FastCoordinates from "../components/FastCoordinates";
 
 
 const HomePage = () => {
@@ -55,6 +57,12 @@ const HomePage = () => {
       </Container>
 
       <Coordinates setAddedValue={setAddedValue} />
+      <Row>
+      <FastCoordinates/>
+      </Row>
+      <Row>
+        <SOS_B/>
+      </Row>
     </>
   );
 };

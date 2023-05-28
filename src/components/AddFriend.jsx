@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { addFriend, api } from "../services/api";
+import { addFriend, getUsersName } from "../services/api";
 import "../styles/FriendsList.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 export default function AddFriend() {
   const [userFriend, setUserFriend] = useState();
+  const[usernames,  setUsernames] = useState([]);
 
   const handle_Click = (e) => {
     // console.log(userFriend);
@@ -14,6 +15,24 @@ export default function AddFriend() {
 
     addFriend(userFriend);
   };
+
+  useEffect(() => {
+    const fetchUsernames = async () => {
+      try {
+        const response = await getUsersName(userFriend);
+        setUsernames(response); // Assuming the API response returns an array of usernames
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUsernames();
+  }, [userFriend]);
+
+  const usernamesArray = usernames.users
+
+ //console.log(usernames.users);
+
 
   
 
@@ -29,7 +48,19 @@ export default function AddFriend() {
           value={userFriend}
           onChange={(e) => setUserFriend(e.target.value)}
         />
+        
         <div className="input-group">
+        <div className="usernames-scrollable">
+        {usernamesArray && usernamesArray.length > 0 ? (
+        <ul>
+          {userFriend && usernamesArray.map((username, index) => (
+            <li key={index}>{username.username}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No usernames found.</p>
+      )}
+      </div>
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -38,7 +69,7 @@ export default function AddFriend() {
             ADD FRIEND
           </button>
         </div>
-      </div>
+        </div>
     </>
   );
 }

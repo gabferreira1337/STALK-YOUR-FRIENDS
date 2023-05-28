@@ -18,7 +18,8 @@ export const Register = (props) => {
   // stop using default action of form
 
   const validatePassword = () => {
-    const passRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/;
     return passRegex.test(password);
   };
 
@@ -26,9 +27,7 @@ export const Register = (props) => {
     e.preventDefault();
 
     if (!validatePassword()) {
-      alert(
-        "Password must be at least 8 characters long and contain at least one capital letter"
-      );
+      
       return;
     }
 
@@ -66,6 +65,13 @@ export const Register = (props) => {
                   id="password"
                   name="password"
                 />
+                {!validatePassword() && (
+                  <div className="password-validation-message">
+                    Password must be at least 8 characters long and contain at
+                    least one capital letter, one digit and one special
+                    character.
+                  </div>
+                )}
               </Form.Group>
               <Button
                 className="btn btn-light btn-outline-dark btn-lg"

@@ -6,46 +6,43 @@ import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../services/api";
 import "../styles/Mapb.css";
 import FilterHistory from "./Filter";
+import { Col, Row } from "react-bootstrap";
 
 export default function LocationComponent({ addedValue }) {
   const [locations, setLocations] = useState([]);
   const token = localStorage.getItem("token");
 
   const [time_end, setTime_end] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedstart, setSelectedstart] = useState(new Date('2021-01-01'));
+  const [selectedend, setSelectedend] = useState(new Date('2024-01-01'));
   const [selectedIds, setSelectedIds] = useState([]);
   const [valuef, setValuef] = useState({});
   
   const [flag, setFlag] = useState(false);
 
-  //console.log(token);
+ 
 
-  useEffect(() => {
-    
-    // Fetch locations initially
-    const fetchData = async () => {
-       fetchUsers();
-  
-      const userData = Object.values(valuef);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: { Authorization: token },
+      };
+
+      const response = await api.get("/follower/", config);
+      const userData = Object.values(response.data.data);
       const allLocations = [];
-  
-      console.log(userData)
+
       for (const user of userData) {
-        const config = {
-          headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        
-       // console.log("Hello");
         const data = {
-          end: '2030-07-01',
-          start: '2021-07-01',
+          end: selectedend.toISOString().slice(0, 10),
+          start: selectedstart.toISOString().slice(0, 10),
           userID: user.id,
         };
-       // console.log("Hello");
+
+       
+
         try {
           const response = await api.post('/position/history/user', data, config);
           allLocations.push(...response.data.locations);
@@ -53,74 +50,50 @@ export default function LocationComponent({ addedValue }) {
           console.error(error);
         }
       }
-  
+
       setLocations(allLocations);
-    };
-  
-    // Fetch locations initially
-    fetchData();
-  
-    // Fetch locations every 5 seconds
-    const intervalId = setInterval(fetchData, 5000);
+    } catch (error) {
+      throw new Error(error.response.data);
+    }
+  };
+
+  fetchData();
+
+  const intervalId = setInterval(fetchData, 100000);
   
     // Clean up the interval when the component is unmounted
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
-
-    
+}, [selectedend, selectedstart]);
 
 
-  
-  const fetchUsers = async () => {
-
-    const token = localStorage.getItem("token"); 
-
-    const config = {
-
-      headers: { Authorization: token },
-
-    };
-
-    try {
-
-      const response = await api.get("/follower/", config);
-
-       //console.log(response.data);
-      // return response;
-      setValuef(response.data.data);
-      
-      //console.log(response.data);
-    } catch (error) {
-
-      throw new Error(error.response.data); // Throw an error with the error message from the API
-    }
-  };
 
  
-  //console.log(userData);
-
- // console.log(locations);
-
   return (
     <>
-    <SOS/>
+    <Row>
+      <Col>
       <DatePicker
-        selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
-        dateFormat="dd/MM/yyyy" // Set the desired date format
+        selected={selectedstart}
+        onChange={(date) => setSelectedstart(date)}
+        dateFormat="yyyy/MM/dd" // Set the desired date format
       />
+      </Col>
+      <Col >
       <DatePicker
-        selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
-        dateFormat="dd/MM/yyyy" // Set the desired date format
+        selected={selectedend}
+        onChange={(date) => setSelectedend(new Date(date))}
+        dateFormat="yyyy/MM/dd" // Set the desired date format
       />
+      </Col>
+      </Row>
       <FilterHistory />
+      <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
       <table class="table text-light">
         <thead>
           <tr>
-            <th scope="col">ID</th>
+            <th scope="col">User ID</th>
             <th scope="col">Latitude</th>
             <th scope="col">Longitude</th>
           </tr>
@@ -128,13 +101,15 @@ export default function LocationComponent({ addedValue }) {
         <tbody>
           {locations.map((location) => (
             <tr key={location.ID}>
-              <td>{location.ID}</td>
+              <td>{location.UserId}</td>
               <td>{location.Latitude}</td>
               <td>{location.Longitude}</td>
+              <td><SOS/></td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </>
   );
 }

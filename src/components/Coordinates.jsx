@@ -41,7 +41,7 @@ export default function Coordinates({ setAddedValue }) {
           type="submit"
           onClick={handleSubmit}
         >
-          Submit
+          Submit Coordinates
         </Button>
       </Row>
     </Form>

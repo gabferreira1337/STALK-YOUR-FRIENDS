@@ -12,12 +12,14 @@ export const Login = (props) => {
   const navigate_register = useNavigate();
   const { authenticated, login } = useContext(AuthContext);
 
-  const [username, setUsername] =
-    useState(""); /* save email email = getter setEmail = setter*/
-  const [password, setPassword] = useState(""); // save password
+  const [username, setUsername] = useState(""); 
+  const [password, setPassword] = useState(""); 
 
   const validatePassword = () => {
-    const passRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    
+    const passRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/
+    
     return passRegex.test(password);
   };
 
@@ -25,13 +27,11 @@ export const Login = (props) => {
     e.preventDefault();
 
     if (!validatePassword()) {
-      alert(
-        "Password must be at least 8 characters long and contain at least one capital letter"
-      );
+
+      alert("Password invalid");
+      
       return;
     }
-
-    // console.log("Hello",{username, password});
 
     login(username, password); // context + api implementation
   };
@@ -43,9 +43,9 @@ export const Login = (props) => {
         <Row className="justify-content-between ">
           <Col sm={6} className="" id="col-1">
             <h2>Welcome Back!</h2>
-            <Form className="login-form " onSubmit={handleSubmit}>
+            <Form className="login-form " >
               <Form.Group>
-                <Form.Label htmlFor="username">username</Form.Label>
+                <Form.Label htmlFor="username">Username</Form.Label>
                 <Form.Control
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -57,7 +57,7 @@ export const Login = (props) => {
               </Form.Group>
 
               <Form.Group>
-                <Form.Label htmlFor="password">password</Form.Label>
+                <Form.Label htmlFor="password">Password</Form.Label>
                 <Form.Control
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -66,11 +66,12 @@ export const Login = (props) => {
                   id="password"
                   name="password"
                 />
+              
               </Form.Group>
 
               <Button
                 className="btn btn-light btn-outline-dark btn-lg"
-                type="submit"
+                type="button" onClick={handleSubmit}
               >
                 Log In
               </Button>

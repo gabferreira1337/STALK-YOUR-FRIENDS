@@ -101,7 +101,7 @@ export const getUserInfo = async () => {
 export const deletePosition = async (id) => {
   const token = localStorage.getItem("token");
 
-  console.log(id);
+  //console.log(id);
 
   const config = {
     headers: { Authorization: token },
@@ -213,9 +213,9 @@ export const fetchUsersHistory = async (id,data_start, data_end) => {
   try {
     const response = await api.post("/position/history/user", data, config);
 
-    console.log(response.data.locations);
+   // console.log(response.data.locations);
 
-    console.log(typeof(response.data.locations))
+   // console.log(typeof(response.data.locations))
   
   
     return response.data.locations;
@@ -255,9 +255,9 @@ export const getsos = async () => {
   try {
     const response = await api.post("/position/history/user", data, config);
 
-    console.log(response.data.locations);
+    //console.log(response.data.locations);
 
-    console.log(typeof(response.data.locations))
+   // console.log(typeof(response.data.locations))
   
   
     return response.data.locations;
@@ -286,7 +286,6 @@ export const getfollowing = async () => {
   };
 
   
-  
 
   try {
     const response = await api.get("/follower/following", config);
@@ -305,3 +304,83 @@ export const getfollowing = async () => {
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
+
+
+
+
+export const sosMode = async () => {
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: { 
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+
+//  console.log(config.headers.Authorization)
+  
+  
+
+  try {
+    const response = await api.post("/user/sos", config);
+
+   // console.log(response.data);
+
+   // console.log(typeof(response.data.locations))
+  
+   alert("SOS ACTIVATED");
+    return response.data;
+
+   
+    
+
+  } catch (error) {
+
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+
+
+
+
+
+
+
+
+
+export const getUsersName = async (username) => {
+
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: { 
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  
+  
+
+  try {
+    const response = await api.get(`/user/search/${username}`, config);
+
+    console.log(response.data);
+
+   // console.log(typeof(response.data.locations))
+  
+  
+    return response.data;
+
+   
+    
+
+  } catch (error) {
+
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+

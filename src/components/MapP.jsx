@@ -142,21 +142,6 @@ const MapP = () => {
 
   return (
     <>
-      
-        <Row>
-          <Col>
-          <div className="sidebar">
-            Longitude: {lng} Latitude: {lat} Zoom: {zoom}
-            </div>
-          </Col>
-          <div>
-          <SOS />
-          </div>
-        </Row>
-      <div>
-        <SOS />
-      </div>
-
       <div ref={mapContainer} className="map-container" />
     </>
   );

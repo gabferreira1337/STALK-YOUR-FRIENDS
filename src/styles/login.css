@@ -44,3 +44,10 @@ button {
 
   margin-top: 75px;
 }
+
+
+.password-validation-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
