@@ -5,58 +5,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/Mapb.css";
 import SOS from "../components/SOS";
+import "../styles/MapP.css";
 
-/*
- export  function LocationComponent() {
-
-  const [locations, setLocations] = useState([]);
-  const token = localStorage.getItem("token");
-
-  console.log(token);
-
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await getHistory(token); 
-        console.log(response);
-        setLocations(response.data.locations);
-      } catch (error) {
-        console.error('Error fetching locations:', error);
-      }
-    };
-
-    // Fetch locations initially
-    fetchLocations();
-
-    // Fetch locations every 5 seconds (adjust the interval as needed)
-    const intervalId = setInterval(fetchLocations, 5000);
-
-    // Clean up the interval when the component is unmounted
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []); // Empty dependency array to only run the effect once
-
-
-  return (
-    <div>
-      <h1>Locations</h1>
-      <ul>
-        {locations.map(location => (
-          <li key={location.ID}>
-            Latitude: {location.Latitude}, Longitude: {location.Longitude}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-*/
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ2FidWZwIiwiYSI6ImNsZ3dwcXN1djAwbmozZnBwZ2ttOHlva2IifQ.dfSkuFimQrAzUDDlNWSj5Q";
 
-const MapP = () => {
+const MapP = ( {addedValue}) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-7);
@@ -94,35 +49,38 @@ const MapP = () => {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-    /* const geojson = {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [-77.032, 38.913],
-          },
-          properties: {
-            title: "Mapbox",
-            description: "Washington, D.C.",
-          },
-        },
-        {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [-122.414, 37.776],
-          },
-          properties: {
-            title: "Mapbox",
-            description: "San Francisco, California",
-          },
-        },
-      ],
-    };*/
 
-    /* for (const feature of geojson.features) {
+    const updatedFeatures = addedValue.map((obj) => {
+      const { Latitude, Longitude, UserId } = obj;
+      return {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [Longitude, Latitude],
+        },
+        properties: {
+          title: `User ${UserId}`,
+          description: "Location",
+        },
+      };
+    });
+  
+    const geojson = {
+      type: "FeatureCOllection",
+      features: updatedFeatures,
+    }
+
+  
+  
+    //Remove markers
+    const markers = document.getElementsByClassName("marker");
+    while (markers[0]) {
+      markers[0].parentNode.removeChild(markers[0]);
+    }
+  
+    
+    
+     for (const feature of geojson.features) {
       // create a HTML element for each feature
       const el = document.createElement("div");
       el.className = "marker";
@@ -133,13 +91,16 @@ const MapP = () => {
         .setPopup(
           new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML(
-              `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
+              `<h4>${feature.properties.title}</h4><p>${feature.properties.description}</p>`
             )
+            .setMaxWidth("300px")
         )
+       
         .addTo(map.current);
-    }*/
-  });
+    }
+  }, [addedValue]);
 
+  
   return (
     <>
       <div ref={mapContainer} className="map-container" />

@@ -15,7 +15,7 @@ import "../styles/Mapb.css";
 import FilterHistory from "./Filter";
 import { Col, Row } from "react-bootstrap";
 
-export default function LocationComponent({ addedValue }) {
+export default function LocationComponent({ setAddedValue }) {
   const [locations, setLocations] = useState([]);
   const token = localStorage.getItem("token");
 
@@ -76,6 +76,10 @@ export default function LocationComponent({ addedValue }) {
   }, [selectedend, selectedstart]);
 
   let cpyUserLocations = [...locations];
+
+  setAddedValue(locations);
+
+  //console.log(setAddedValue)
 
   if (filterOption === "newest") {
     cpyUserLocations = cpyUserLocations.reverse();
