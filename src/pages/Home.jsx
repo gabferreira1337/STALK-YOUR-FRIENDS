@@ -40,7 +40,7 @@ const HomePage = () => {
         </Row>
       </Container>
 
-      <Coordinates setAddedValue={setAddedValue} />
+      <Coordinates />
       <Row>
         <FastCoordinates />
       </Row>

@@ -5,7 +5,7 @@ import "../styles/userHistory.css";
 
 export default function UserLocationComponent() {
   const [userlocations, setUserLocations] = useState([]);
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   //console.log(token);
 

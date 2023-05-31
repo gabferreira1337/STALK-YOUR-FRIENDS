@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import "../styles/coordinates.css";
 import { submitCoord } from "../services/api";
 
-export default function Coordinates({ setAddedValue }) {
+export default function Coordinates() {
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
 
@@ -12,7 +12,7 @@ export default function Coordinates({ setAddedValue }) {
 
     submitCoord(lat, lng);
 
-    setAddedValue(lat);
+    
   };
 
   return (

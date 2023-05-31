@@ -14,19 +14,14 @@ import CheckLocations from "./CheckLocations";
 export default function FriendsList() {
   const [users, setUsers] = useState([]);
   const [usersLocations, setUsersLocations] = useState([]);
-  const [changevar, setChangevar] = useState(1);
-
-  /*  useEffect(() => {
-    fetchUsers();
-  }, [changevar]);
-*/
+  const [changevar, setChangevar] = useState("");
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [changevar]);
 
   const fetchUsers = async () => {
-    const token = localStorage.getItem("token");
+    const token =  sessionStorage.getItem("token");
 
     const config = {
       headers: { Authorization: token },
@@ -35,24 +30,23 @@ export default function FriendsList() {
     try {
       const response = await api.get("/follower/", config);
 
-      // console.log(response.data);
-      // return response;
-
       setUsers(response.data.data);
-      setChangevar(changevar + 1);
+
       //console.log(response.data.data);
     } catch (error) {
       alert("Can't update your friends list");
+
       throw new Error(error.response.data); // Throw an error with the error message from the API
     }
   };
 
   const handle_event_click_unfollow = (e) => {
-    console.log(e);
     //e.preventDefault();
+    console.log(e);
     unfollowfriend(e);
   };
 
+  //once  promise resolved update the usersLocations state variable with  user history data
   const handle_check_locations = (id) => {
     setUsersLocations(() =>
       fetchUsersHistory(id).then((resolved) => {
@@ -71,8 +65,8 @@ export default function FriendsList() {
         <Col sm={13}>
           <List className="friends-list" sx={{ width: "100%", maxWidth: 260 }}>
             {users.map((user) => (
-              <>
-                <ListItem alignItems="flex-start" key={user.id}>
+               <React.Fragment key={user.id}>
+                <ListItem alignItems="flex-start">
                   <ListItemText
                     className="list-text"
                     primary={
@@ -102,10 +96,10 @@ export default function FriendsList() {
                   CheckLocations
                 </Button>
                 <Divider variant="inset" component="li" />
-              </>
+                </React.Fragment>
             ))}
             <ListItem alignItems="flex-start">
-              <AddFriend />
+              <AddFriend setChangevar={setChangevar} />
             </ListItem>
           </List>
         </Col>

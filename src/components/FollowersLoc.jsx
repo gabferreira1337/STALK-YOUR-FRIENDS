@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { deletePosition, getHistory } from "../services/api";
 import SOS from "./SOS";
 import DatePicker from "react-datepicker";
@@ -17,7 +10,7 @@ import { Col, Row } from "react-bootstrap";
 
 export default function LocationComponent({ setAddedValue }) {
   const [locations, setLocations] = useState([]);
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const [time_end, setTime_end] = useState("");
   const [selectedstart, setSelectedstart] = useState(new Date("2021-01-01"));
@@ -31,7 +24,7 @@ export default function LocationComponent({ setAddedValue }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const config = {
           headers: { Authorization: token },
         };
@@ -77,7 +70,9 @@ export default function LocationComponent({ setAddedValue }) {
 
   let cpyUserLocations = [...locations];
 
-  setAddedValue(locations);
+  useEffect(() => {
+    setAddedValue(locations);
+  }, [locations, setAddedValue]);
 
   //console.log(setAddedValue)
 
@@ -89,7 +84,6 @@ export default function LocationComponent({ setAddedValue }) {
     setFilterOption(e.target.value);
   };
 
-  console.log(cpyUserLocations);
   return (
     <>
       <Row>
@@ -127,7 +121,7 @@ export default function LocationComponent({ setAddedValue }) {
         </label>
       </div>
       <div style={{ maxHeight: "500px", overflowY: "auto" }}>
-        <table class="table text-light">
+        <table className="table text-light">
           <thead>
             <tr>
               <th scope="col">User ID</th>

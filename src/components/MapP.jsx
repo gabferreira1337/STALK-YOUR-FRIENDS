@@ -3,7 +3,7 @@ import { getHistory } from "../services/api";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import "../styles/Mapb.css";
+
 import SOS from "../components/SOS";
 import "../styles/MapP.css";
 

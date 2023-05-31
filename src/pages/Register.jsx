@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { createSession } from "../services/api";
 import Navb from "../components/Navbar";
 import Mapb from "../components/Mapb";
-import axios from "axios";
 import { AuthContext, AuthProvider } from "../contexts/auth";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 

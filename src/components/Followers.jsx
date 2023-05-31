@@ -28,7 +28,7 @@ export default function Followers() {
 
   const followersArray = Object.values(following);
 
-  console.log(followersArray[0]);
+ // console.log(followersArray[0]);
 
   return (
     <>

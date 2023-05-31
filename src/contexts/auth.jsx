@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // comeca e os componentes sao renderizados sem esperar asincrono
 
-    const recoveredUser = localStorage.getItem("username");
-    const token = localStorage.getItem("token");
+    const recoveredUser =  sessionStorage.getItem("username");
+    const token =  sessionStorage.getItem("token");
 
     if (recoveredUser && token) {
       //setUser(JSON.parse(recoveredUser)); //
@@ -48,11 +48,11 @@ export const AuthProvider = ({ children }) => {
       const loggedUser = response.username;
       const token = response.token;
 
-      localStorage.setItem("username", JSON.stringify(loggedUser)); //save in the local storage
+      sessionStorage.setItem("username", JSON.stringify(loggedUser)); //save in the session storage
 
-      localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
 
-      api.defaults.headers.Authorization = `${token}`;
+      api.defaults.headers.Authorization = `Bearer ${token}`;
 
       setUser(loggedUser);
       // console.log("Navigating");
@@ -66,8 +66,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     // console.log("logout");
-    localStorage.removeItem("username"); // remove form local storage the credentials
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("username"); // remove form  session storage the credentials
+    sessionStorage.removeItem("token");
 
     api.defaults.headers.Authorization = null; //set authorization to null;
 

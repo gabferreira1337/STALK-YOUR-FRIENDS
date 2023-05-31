@@ -6,7 +6,7 @@ export const api = axios.create({
 
 export const createSession = async (username, password) => {
   try {
-    //console.log("hellodada");
+    
     const response = await api.post("/auth/login", { username, password });
     return response.data; // Return the created user object
   } catch (error) {
@@ -20,7 +20,7 @@ export const getUsers = async () => {
     const response = await api.get("/");
     return response.data;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    throw new Error(error.response.data);
     throw error; // Rethrow the error or handle it accordingly
   }
 };
@@ -36,7 +36,7 @@ export const createUser = async (username, password) => {
 };
 
 export const submitCoord = async (lat, lng) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const data = {
     Latitude: parseFloat(lat),
@@ -58,7 +58,7 @@ export const submitCoord = async (lat, lng) => {
 };
 
 export const getHistory = async (data_end, data_start) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const data = {
     end: "2023-07-01",
@@ -82,7 +82,7 @@ export const getHistory = async (data_end, data_start) => {
 };
 
 export const getUserInfo = async () => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: { Authorization: token },
@@ -99,7 +99,7 @@ export const getUserInfo = async () => {
 };
 
 export const deletePosition = async (id) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   //console.log(id);
 
@@ -120,7 +120,7 @@ export const deletePosition = async (id) => {
 };
 
 export const getFollowers = async () => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: { Authorization: token },
@@ -136,7 +136,7 @@ export const getFollowers = async () => {
 };
 
 export const addFriend = async (id) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   // console.log(typeof(id));
 
@@ -161,10 +161,12 @@ export const addFriend = async (id) => {
   }
 };
 
-export const unfollowfriend = async (id) => {
-  const token = localStorage.getItem("token");
 
-  // console.log(token);
+
+export const unfollowfriend = async (id) => {
+  const token =  sessionStorage.getItem("token");
+
+  // console.log(typeof(id));
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -173,8 +175,7 @@ export const unfollowfriend = async (id) => {
   try {
     const response = await api.delete(
       "/follower/",
-      { FollowerUserID: id },
-      config
+      { data: { FollowerUserID: id }, ...config }
     );
     //console.log(response.data);
 
@@ -187,8 +188,9 @@ export const unfollowfriend = async (id) => {
   }
 };
 
+
 export const fetchUsersHistory = async (id, data_start, data_end) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: {
@@ -217,8 +219,12 @@ export const fetchUsersHistory = async (id, data_start, data_end) => {
   }
 };
 
+
+
+
+
 export const getsos = async () => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: {
@@ -247,7 +253,7 @@ export const getsos = async () => {
 };
 
 export const getfollowing = async () => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: {
@@ -269,34 +275,36 @@ export const getfollowing = async () => {
   }
 };
 
-export const sosMode = async () => {
-  const token = localStorage.getItem("token");
+export const sosMode = async (id) => {
+  const token =  sessionStorage.getItem("token");
+
+  // console.log(typeof(id));
 
   const config = {
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `${token}` },
   };
 
-  //  console.log(config.headers.Authorization)
-
   try {
-    const response = await api.post("/user/sos", config);
+    const response = await api.post(
+      "/user/sos", null,
+       config 
+    );
+    //console.log(response.data);
 
-    // console.log(response.data);
+    if(response.status === 200){
+      alert("SOS MODE ACTIVATED");
+    }
 
-    // console.log(typeof(response.data.locations))
-
-    alert("SOS ACTIVATED");
-    return response.data;
+    // return response.data;
   } catch (error) {
+    alert("Can't activate SOS mode");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
 
+
 export const getUsersName = async (username) => {
-  const token = localStorage.getItem("token");
+  const token =  sessionStorage.getItem("token");
 
   const config = {
     headers: {
@@ -308,7 +316,7 @@ export const getUsersName = async (username) => {
   try {
     const response = await api.get(`/user/search/${username}`, config);
 
-    console.log(response.data);
+    //console.log(response.data);
 
     // console.log(typeof(response.data.locations))
 
