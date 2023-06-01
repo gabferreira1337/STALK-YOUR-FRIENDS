@@ -61,8 +61,11 @@ export default function FriendsList() {
         <Col sm={9}>
           <CheckLocations usersLocations={usersLocations} />
         </Col>
+        <div className="friends-title">
         <h2>Friends </h2>
-        <Col sm={13}>
+        </div>
+        <Col sm={12}  className="col-size ">
+
           <List className="friends-list" sx={{ width: "100%", maxWidth: 260 }}>
             {users.map((user) => (
                <React.Fragment key={user.id}>

@@ -17,7 +17,6 @@ const HomePage = () => {
 
   const [addedValue, setAddedValue] = useState([]);
 
-
   const handleLogout = () => {
     logout();
   };
@@ -32,7 +31,7 @@ const HomePage = () => {
       <Container className="container  d-flex " id="form-container">
         <Row className="justify-content-between ">
           <Col sm={6} className="" id="col-1">
-            <LocationComponent setAddedValue={setAddedValue}/>
+            <LocationComponent setAddedValue={setAddedValue} />
           </Col>
           <Col sm={6} className="col-2 ">
             <MapP addedValue={addedValue} />

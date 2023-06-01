@@ -3,18 +3,25 @@ import { getHistory, getUserInfo, deletePosition } from "../services/api";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/userHistory.css";
 
-export default function UserLocationComponent() {
+export default function UserLocationComponent({setUserName ,setSosMode, setUid, setCountLocations, setCountFriends}) {
   const [userlocations, setUserLocations] = useState([]);
   const token =  sessionStorage.getItem("token");
 
-  //console.log(token);
+ 
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         const response = await getUserInfo();
-        console.log(response.user.locations);
+
+        setUserName(response.user.username);
         setUserLocations(response.user.UserPositions);
+        setSosMode(response.user.sos);
+        setUid(response.user.ID)
+        setCountLocations(response.user.UserPositions.length)
+        setCountFriends(response.user.UserFriends.length)
+        //console.log(response.user);
+       
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -24,7 +31,7 @@ export default function UserLocationComponent() {
     fetchLocations();
 
     // Fetch locations every 5 seconds
-    const intervalId = setInterval(fetchLocations, 5000);
+    const intervalId = setInterval(fetchLocations, 30000);
 
     // Clean up the interval when the component is unmounted
     return () => {
@@ -52,7 +59,7 @@ export default function UserLocationComponent() {
 
   return (
     <>
-      <br />
+  
       <h2>Your Locations History:</h2>
       <Row>
         <Col>

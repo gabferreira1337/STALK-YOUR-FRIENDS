@@ -19,6 +19,7 @@
     "formik": "^2.2.9",
     "fs": "^0.0.1-security",
     "mapbox-gl": "^2.14.1",
+    "mdb-react-ui-kit": "^6.1.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.22",
     "path-to-regexp": "^6.2.1",

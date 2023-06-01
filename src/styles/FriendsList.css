@@ -9,3 +9,15 @@
   max-width: 10000px;
   overflow-x: auto;
 }
+
+.col-size {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.friends-title {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 12rem;
+}
