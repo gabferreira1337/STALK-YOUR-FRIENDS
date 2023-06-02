@@ -32,6 +32,8 @@ export default function FriendsList() {
 
       setUsers(response.data.data);
 
+     
+
       //console.log(response.data.data);
     } catch (error) {
       alert("Can't update your friends list");
@@ -42,7 +44,7 @@ export default function FriendsList() {
 
   const handle_event_click_unfollow = (e) => {
     //e.preventDefault();
-    console.log(e);
+    //console.log(e);
     unfollowfriend(e);
   };
 
@@ -50,6 +52,7 @@ export default function FriendsList() {
   const handle_check_locations = (id) => {
     setUsersLocations(() =>
       fetchUsersHistory(id).then((resolved) => {
+        console.log(resolved);
         setUsersLocations(resolved);
       })
     );

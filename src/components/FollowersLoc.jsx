@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { deletePosition, getHistory } from "../services/api";
+import { deletePosition, getUsersList } from "../services/api";
 import SOS from "./SOS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../services/api";
 import "../styles/Mapb.css";
 import FilterHistory from "./Filter";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row , Button} from "react-bootstrap";
 
 export default function LocationComponent({ setAddedValue }) {
   const [locations, setLocations] = useState([]);
   const token = sessionStorage.getItem("token");
 
-  const [time_end, setTime_end] = useState("");
   const [selectedstart, setSelectedstart] = useState(new Date("2021-01-01"));
   const [selectedend, setSelectedend] = useState(new Date("2024-01-01"));
   const [selectedIds, setSelectedIds] = useState([]);
-  const [valuef, setValuef] = useState({});
-
-  const [flag, setFlag] = useState(false);
+  const [userData, setUserData] = useState([]);
   const [filterOption, setFilterOption] = useState("oldest");
+  const [sos, setSos] = useState([]);
+
+  let data;
+  let uname;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +34,7 @@ export default function LocationComponent({ setAddedValue }) {
         const userData = Object.values(response.data.data);
         const allLocations = [];
 
+       
         for (const user of userData) {
           const data = {
             end: selectedend.toISOString().slice(0, 10),
@@ -47,15 +49,59 @@ export default function LocationComponent({ setAddedValue }) {
               config
             );
             allLocations.push(...response.data.locations);
+           
           } catch (error) {
-            console.error(error);
+            throw new Error(error.response.data);
           }
+
+
+          getUsersList()
+          .then((sosArray)=>{
+            console.log(sosArray);
+
+            data = sosArray;
+           /*const filteredSosArray = sosArray.filter((sosObj) => sosObj.username === user.username);
+    
+           console.log(filteredSosArray)
+       
+          // console.log(sosArray[0].sos)
+       
+       
+            data = {
+             username: sosArray[0].username,
+             sos: sosArray[0].sos,
+           }
+       
+           setSos((prevData) => [...prevData, data]);*/
+          // console.log(sos);
+          })
+          
+          .catch((error)=>{
+           //console.error(error);
+          })
+
+
+    
         }
 
+/*
+        for (const obj of userData) {
+          if (obj.username === user.username) {
+             uname = obj.sos;
+          }
+        }*/
+       
         setLocations(allLocations);
+        setUserData(userData);
+
+
+
+        console.log(uname);
+
       } catch (error) {
         throw new Error(error.response.data);
       }
+      
     };
 
     fetchData();
@@ -68,13 +114,67 @@ export default function LocationComponent({ setAddedValue }) {
     };
   }, [selectedend, selectedstart]);
 
-  let cpyUserLocations = [...locations];
+
+
+
+ /* useEffect(()=> {
+
+    const fetchData = async () => {
+     
+
+      userData.forEach(username => {
+
+       // console.log(userData)
+      getsos(username.username)
+      .then((sosArray)=>{
+       const filteredSosArray = sosArray.filter((sosObj) => sosObj.username === username.username);
+
+       console.log(filteredSosArray)
+   
+      // console.log(sosArray[0].sos)
+   
+   
+        data = {
+         username: sosArray[0].username,
+         sos: sosArray[0].sos,
+       }
+   
+       setSos((prevData) => [...prevData, data]);
+      // console.log(sos);
+      })
+      
+      .catch((error)=>{
+       //console.error(error);
+      })
+    }
+  )}
+  fetchData();
+
+  },[]);*/
+
+
+  //console.log(sos);
+  
+
+
+  // insert into updated locations each 
+const updatedLocations = locations.map((location) => ({
+  ...location,
+  username: userData.find((user) => user.id === location.UserId)?.username || "N/A",
+}));
+
+
+let cpyUserLocations = [...updatedLocations];
+
 
   useEffect(() => {
     setAddedValue(locations);
   }, [locations, setAddedValue]);
 
-  //console.log(setAddedValue)
+ 
+
+
+
 
   if (filterOption === "newest") {
     cpyUserLocations = cpyUserLocations.reverse();
@@ -84,6 +184,10 @@ export default function LocationComponent({ setAddedValue }) {
     setFilterOption(e.target.value);
   };
 
+
+ const sosArr = Object.values(sos);
+
+ //console.log(sos);
   return (
     <>
       <Row>
@@ -131,17 +235,20 @@ export default function LocationComponent({ setAddedValue }) {
             </tr>
           </thead>
           <tbody>
-            {cpyUserLocations.map((location) => (
-              <tr key={location.ID}>
-                <td>{location.UserId}</td>
+          {cpyUserLocations.map((location) => (
+            <tr key={location.ID}>
+                <td>{location.username}</td>
                 <td>{location.CreatedAt.slice(0, 10)}</td>
                 <td>{location.Latitude}</td>
                 <td>{location.Longitude}</td>
                 <td>
-                  <SOS />
+                  <Button className="btn btn-sm btn-danger">
+                    SOS: 
+                  </Button>
                 </td>
               </tr>
-            ))}
+          ))} 
+
           </tbody>
         </table>
       </div>

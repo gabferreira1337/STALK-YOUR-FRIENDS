@@ -223,7 +223,7 @@ export const fetchUsersHistory = async (id, data_start, data_end) => {
 
 
 
-export const getsos = async () => {
+export const getsos = async (username) => {
   const token =  sessionStorage.getItem("token");
 
   const config = {
@@ -233,21 +233,17 @@ export const getsos = async () => {
     },
   };
 
-  const data = {
-    end: "2030-07-01",
-    start: "2021-07-01",
-  };
 
   try {
-    const response = await api.post("/position/history/user", data, config);
+    const response = await api.get(`/user/search/${username}`, config);
 
-    //console.log(response.data.locations);
+   
 
-    // console.log(typeof(response.data.locations))
-
-    return response.data.locations;
+     //console.log(response.data.users)
+   // console.log(response.data)
+    return response.data.users;
   } catch (error) {
-    alert("Can't check user " + " history");
+    alert("Can't check SOS state");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
@@ -325,3 +321,28 @@ export const getUsersName = async (username) => {
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
+
+
+export const getUsersList = async () => {
+  const token =  sessionStorage.getItem("token");
+
+  const config = {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await api.get('/user/', config);
+
+    //console.log(response.data);
+
+    // console.log(typeof(response.data.locations))
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data); // Throw an error with the error message from the API
+  }
+};
+
