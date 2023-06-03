@@ -6,22 +6,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../services/api";
 import "../styles/Mapb.css";
 import FilterHistory from "./Filter";
-import { Col, Row , Button} from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 
 export default function LocationComponent({ setAddedValue }) {
   const [locations, setLocations] = useState([]);
-  const token = sessionStorage.getItem("token");
 
   const [selectedstart, setSelectedstart] = useState(new Date("2021-01-01"));
   const [selectedend, setSelectedend] = useState(new Date("2024-01-01"));
   const [selectedIds, setSelectedIds] = useState([]);
   const [userData, setUserData] = useState([]);
   const [filterOption, setFilterOption] = useState("oldest");
-  const [sos, setSos] = useState([]);
-
-  let data;
-  let uname;
-
+  const [matchedUser, setMatchedUser] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,7 +30,6 @@ export default function LocationComponent({ setAddedValue }) {
         const userData = Object.values(response.data.data);
         const allLocations = [];
 
-       
         for (const user of userData) {
           const data = {
             end: selectedend.toISOString().slice(0, 10),
@@ -49,59 +44,18 @@ export default function LocationComponent({ setAddedValue }) {
               config
             );
             allLocations.push(...response.data.locations);
-           
           } catch (error) {
             throw new Error(error.response.data);
           }
-
-
-          getUsersList()
-          .then((sosArray)=>{
-            console.log(sosArray);
-
-            data = sosArray;
-           /*const filteredSosArray = sosArray.filter((sosObj) => sosObj.username === user.username);
-    
-           console.log(filteredSosArray)
-       
-          // console.log(sosArray[0].sos)
-       
-       
-            data = {
-             username: sosArray[0].username,
-             sos: sosArray[0].sos,
-           }
-       
-           setSos((prevData) => [...prevData, data]);*/
-          // console.log(sos);
-          })
-          
-          .catch((error)=>{
-           //console.error(error);
-          })
-
-
-    
         }
 
-/*
-        for (const obj of userData) {
-          if (obj.username === user.username) {
-             uname = obj.sos;
-          }
-        }*/
-       
         setLocations(allLocations);
         setUserData(userData);
-
-
-
-        console.log(uname);
-
+        listusers();
+        // testfunction();
       } catch (error) {
         throw new Error(error.response.data);
       }
-      
     };
 
     fetchData();
@@ -114,66 +68,61 @@ export default function LocationComponent({ setAddedValue }) {
     };
   }, [selectedend, selectedstart]);
 
+ 
+  let matchedUsers = [];
+  const listusers = () => {
+    getUsersList()
+      .then((sosArray) => {
+        // console.log(sosArray);
 
+        for (let i = 0; i < userData.length; i++) {
+          for (let j = 0; j < sosArray.length; j++) {
+            if (
+              userData[i].username === sosArray[j].username &&
+              sosArray[j].sos == true
+            ) {
+              matchedUsers.push(sosArray[j].username);
+            }
+          }
+        }
+        setMatchedUser(matchedUsers);
 
-
- /* useEffect(()=> {
-
-    const fetchData = async () => {
-     
-
-      userData.forEach(username => {
-
-       // console.log(userData)
-      getsos(username.username)
-      .then((sosArray)=>{
-       const filteredSosArray = sosArray.filter((sosObj) => sosObj.username === username.username);
-
-       console.log(filteredSosArray)
-   
-      // console.log(sosArray[0].sos)
-   
-   
-        data = {
-         username: sosArray[0].username,
-         sos: sosArray[0].sos,
-       }
-   
-       setSos((prevData) => [...prevData, data]);
-      // console.log(sos);
+        //testfunction();
       })
-      
-      .catch((error)=>{
-       //console.error(error);
-      })
-    }
-  )}
-  fetchData();
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  },[]);*/
+  // insert into updated locations each
+  const updatedLocations = locations.map((location) => ({
+    ...location,
+    username:
+      userData.find((user) => user.id === location.UserId)?.username || "N/A",
+  }));
 
+  let cpyUserLocations = [...updatedLocations];
 
-  //console.log(sos);
-  
-
-
-  // insert into updated locations each 
-const updatedLocations = locations.map((location) => ({
-  ...location,
-  username: userData.find((user) => user.id === location.UserId)?.username || "N/A",
-}));
-
-
-let cpyUserLocations = [...updatedLocations];
-
+  const testfunction = () => {
+    //console.log(matchedUser)
+    cpyUserLocations = cpyUserLocations.map((location) => {
+      //console.log(location.username)
+      if (matchedUser.includes(location.username)) {
+        location.sos = true;
+      } else {
+        location.sos = false;
+      }
+      return location;
+    });
+  };
 
   useEffect(() => {
     setAddedValue(locations);
   }, [locations, setAddedValue]);
 
- 
-
-
+  useEffect(() => {
+    listusers();
+  }, []);
 
 
   if (filterOption === "newest") {
@@ -183,11 +132,12 @@ let cpyUserLocations = [...updatedLocations];
   const handleFilterOptionChange = (e) => {
     setFilterOption(e.target.value);
   };
+  /*useEffect(() => {
+    testfunction();
+  }, [matchedUser]);*/
 
-
- const sosArr = Object.values(sos);
-
- //console.log(sos);
+  testfunction();
+  //console.log(cpyUserLocations);
   return (
     <>
       <Row>
@@ -228,27 +178,30 @@ let cpyUserLocations = [...updatedLocations];
         <table className="table text-light">
           <thead>
             <tr>
-              <th scope="col">User ID</th>
+              <th scope="col">UserName</th>
               <th scope="col">Date</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
             </tr>
           </thead>
           <tbody>
-          {cpyUserLocations.map((location) => (
-            <tr key={location.ID}>
-                <td>{location.username}</td>
-                <td>{location.CreatedAt.slice(0, 10)}</td>
-                <td>{location.Latitude}</td>
-                <td>{location.Longitude}</td>
-                <td>
-                  <Button className="btn btn-sm btn-danger">
-                    SOS: 
-                  </Button>
-                </td>
-              </tr>
-          ))} 
-
+            {cpyUserLocations.map((location) => {
+              return (
+                <tr key={location.ID}>
+                  <td>{location.username}</td>
+                  <td>{location.CreatedAt.slice(0, 10)}</td>
+                  <td>{location.Latitude}</td>
+                  <td>{location.Longitude}</td>
+                  <td>
+                    {location.sos ? (
+                      <Button className="btn btn-danger">SOS</Button>
+                    ) : (
+                      <p ></p>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

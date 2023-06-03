@@ -340,7 +340,7 @@ export const getUsersList = async () => {
 
     // console.log(typeof(response.data.locations))
 
-    return response.data;
+    return response.data.users;
   } catch (error) {
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }

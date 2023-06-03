@@ -10,8 +10,17 @@ export default function Coordinates() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // check lng and lat values before making request
+    if(lat <= -90 || lat >= 90 && lng <= -180 || lng >= 180){
+      alert("Couldn't add location : coordinates must be between -90 and 90  and for longitude -180 to 180 ");
+      return;
+    }
+
     submitCoord(lat, lng);
 
+    // clear input
+    setLat([]);
+    setLng([]);
     
   };
 
