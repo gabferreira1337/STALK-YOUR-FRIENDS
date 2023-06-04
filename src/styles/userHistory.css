@@ -10,7 +10,7 @@ h2 {
 
 
 p {
-  color: aliceblue;
+  color: rgb(0, 0, 0);
 
 }
 
@@ -19,4 +19,8 @@ p {
 .filter-label{
   background-color: aliceblue;
 
+}
+
+.description{
+  color: black;
 }

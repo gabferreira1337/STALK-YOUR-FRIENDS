@@ -1,18 +1,11 @@
 
 .map-container{
-  height: 500px;
+height: 500px;
  width: 500px;
+ 
 }
 
 
-@media (min-width: 992px) {
-  .map-container {
- margin-left: 370px;
- height: 800px;
- width: 800px;
- border-color: aliceblue;
-}
-}
 
 #maps {
   background-color: azure;
@@ -27,6 +20,25 @@
 .col-2{
 
   padding: 0rem;
+}
+
+
+@media (min-width: 992px) {
+  .map-container {
+ margin-left: 370px;
+ height: 800px;
+ width: 800px;
+ border-color: aliceblue;
+}
+}
+
+@media (min-width: 1280px){
+  .map-container {
+  margin-left: 200px;
+  height: 800px;
+  width: 800px;
+  border-color: aliceblue;
+ }
 }
 
 

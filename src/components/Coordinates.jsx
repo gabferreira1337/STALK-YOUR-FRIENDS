@@ -1,5 +1,5 @@
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import React, { useState, useContext } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
 import "../styles/coordinates.css";
 import { submitCoord } from "../services/api";
 
@@ -11,8 +11,10 @@ export default function Coordinates() {
     e.preventDefault();
 
     // check lng and lat values before making request
-    if(lat <= -90 || lat >= 90 && lng <= -180 || lng >= 180){
-      alert("Couldn't add location : coordinates must be between -90 and 90  and for longitude -180 to 180 ");
+    if (lat <= -90 || (lat >= 90 && lng <= -180) || lng >= 180) {
+      alert(
+        "Couldn't add location : coordinates must be between -90 and 90  and for longitude -180 to 180 "
+      );
       return;
     }
 
@@ -21,7 +23,6 @@ export default function Coordinates() {
     // clear input
     setLat([]);
     setLng([]);
-    
   };
 
   return (

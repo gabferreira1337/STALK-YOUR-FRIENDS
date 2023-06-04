@@ -4,10 +4,10 @@ import { addFriend, getUsersName } from "../services/api";
 import "../styles/FriendsList.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
-export default function AddFriend({setChangevar}) {
+export default function AddFriend({ setChangevar }) {
   const [userFriend, setUserFriend] = useState();
   const [usernames, setUsernames] = useState([]);
-  const [userid, setUserID]  = useState('');
+  const [userid, setUserID] = useState("");
 
   const handle_Click = (e) => {
     // console.log(userFriend);
@@ -35,17 +35,12 @@ export default function AddFriend({setChangevar}) {
   const usernamesArray = usernames.users;
 
   const handleUsernameClick = (username, user_id) => {
+    setUserFriend(username); // set input value
 
-    setUserFriend(username);       // set input value 
+    setUserID(user_id); // get the userID for the request
 
-    setUserID(user_id);           // get the userID for the request
-
-    setUsernames([]);             // clear array with usernames
-
-  }
-
-
-  
+    setUsernames([]); // clear array with usernames
+  };
 
   return (
     <>
@@ -66,11 +61,18 @@ export default function AddFriend({setChangevar}) {
               <ul>
                 {userFriend &&
                   usernamesArray.map((username, index) => (
-                    <li key={index} onClick={()=> handleUsernameClick(username.username, username.ID)}>{username.username}</li>
+                    <li
+                      key={index}
+                      onClick={() =>
+                        handleUsernameClick(username.username, username.ID)
+                      }
+                    >
+                      {username.username}
+                    </li>
                   ))}
               </ul>
             ) : (
-              <p>No usernames found.</p>
+              <p></p>
             )}
           </div>
           <button

@@ -13,8 +13,7 @@ export const Register = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // stop using default action of form
-
+  
   const validatePassword = () => {
     const passRegex =
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/;
@@ -28,7 +27,6 @@ export const Register = (props) => {
       return;
     }
 
-    // console.log("submit");
 
     register(username, password);
   };
@@ -49,6 +47,7 @@ export const Register = (props) => {
                   onChange={(e) => setUsername(e.target.value)}
                   id="username"
                   placeholder="0x1337"
+                  autoComplete="off"
                 />
               </Form.Group>
 
@@ -61,6 +60,7 @@ export const Register = (props) => {
                   placeholder="********"
                   id="password"
                   name="password"
+                  autoComplete="off"
                 />
                 {!validatePassword() && (
                   <div className="password-validation-message">

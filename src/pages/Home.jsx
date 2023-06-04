@@ -1,14 +1,13 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../contexts/auth";
 import NavbAuth from "../components/Navbar_auth";
 import MapP from "../components/MapP";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import SOS from "../components/SOS";
-import { getUsers } from "../services/api";
+import { Container, Row, Col } from "react-bootstrap";
 import Coordinates from "../components/Coordinates";
 import LocationComponent from "../components/FollowersLoc";
 import SOS_B from "../components/SOSB";
 import FastCoordinates from "../components/FastCoordinates";
+import "../styles/Mapb.css"
 
 const HomePage = () => {
   const { logout } = useContext(AuthContext);

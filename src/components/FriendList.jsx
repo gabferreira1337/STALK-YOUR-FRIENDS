@@ -15,13 +15,14 @@ export default function FriendsList() {
   const [users, setUsers] = useState([]);
   const [usersLocations, setUsersLocations] = useState([]);
   const [changevar, setChangevar] = useState("");
+  const [showmodal, setShowmodal] = useState(null);
 
   useEffect(() => {
     fetchUsers();
   }, [changevar]);
 
   const fetchUsers = async () => {
-    const token =  sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     const config = {
       headers: { Authorization: token },
@@ -32,8 +33,6 @@ export default function FriendsList() {
 
       setUsers(response.data.data);
 
-     
-
       //console.log(response.data.data);
     } catch (error) {
       alert("Can't update your friends list");
@@ -43,16 +42,15 @@ export default function FriendsList() {
   };
 
   const handle_event_click_unfollow = (e) => {
-    //e.preventDefault();
-    //console.log(e);
     unfollowfriend(e);
   };
 
   //once  promise resolved update the usersLocations state variable with  user history data
   const handle_check_locations = (id) => {
+    setShowmodal(true);
     setUsersLocations(() =>
       fetchUsersHistory(id).then((resolved) => {
-        console.log(resolved);
+        //console.log(resolved);
         setUsersLocations(resolved);
       })
     );
@@ -62,16 +60,19 @@ export default function FriendsList() {
     <>
       <Row>
         <Col sm={9}>
-          <CheckLocations usersLocations={usersLocations} />
+          <CheckLocations
+            usersLocations={usersLocations}
+            setShowmodal={setShowmodal}
+            showmodal={showmodal}
+          />
         </Col>
         <div className="friends-title">
-        <h2>Friends </h2>
+          <h2>Friends </h2>
         </div>
-        <Col sm={12}  className="col-size ">
-
+        <Col sm={12} className="col-size ">
           <List className="friends-list" sx={{ width: "100%", maxWidth: 260 }}>
             {users.map((user) => (
-               <React.Fragment key={user.id}>
+              <React.Fragment key={user.id}>
                 <ListItem alignItems="flex-start">
                   <ListItemText
                     className="list-text"
@@ -102,7 +103,7 @@ export default function FriendsList() {
                   CheckLocations
                 </Button>
                 <Divider variant="inset" component="li" />
-                </React.Fragment>
+              </React.Fragment>
             ))}
             <ListItem alignItems="flex-start">
               <AddFriend setChangevar={setChangevar} />

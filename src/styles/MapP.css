@@ -1,32 +1,42 @@
 .marker {
- 
-  background-image: url(map-marker.png);
+
+  background-image: url('../styles/img/map-marker.png');
   background-size: cover;
+  background-color: transparent;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
+  color: black;
 }
+
 
 
 .mapboxgl-popup-content {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
+  
 }
 
-
-
-.marker {
-  background-size: cover;
-  background-color: transparent;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
 
 
 .mapboxgl-popup-content{
 
 
   color: black;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+
+.description{
+  color: rgb(218, 30, 30);
+}
+
+.marker-sos {
+  /* if sos === true */
+  background-image: url('../styles/img/map-marker2.jpg');
+  
 }

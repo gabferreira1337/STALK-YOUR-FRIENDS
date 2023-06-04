@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { deletePosition, getUsersList } from "../services/api";
-import SOS from "./SOS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../services/api";
-import "../styles/Mapb.css";
-import FilterHistory from "./Filter";
+import "../styles/MapP.css";
 import { Col, Row, Button } from "react-bootstrap";
+import ModalSos from "../components/ModalSos";
 
 export default function LocationComponent({ setAddedValue }) {
   const [locations, setLocations] = useState([]);
 
-  const [selectedstart, setSelectedstart] = useState(new Date("2021-01-01"));
+  const [selectedstart, setSelectedstart] = useState(new Date("2023-01-01"));
   const [selectedend, setSelectedend] = useState(new Date("2024-01-01"));
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedusername, setSelectedusername] = useState([]);
   const [userData, setUserData] = useState([]);
   const [filterOption, setFilterOption] = useState("oldest");
   const [matchedUser, setMatchedUser] = useState([]);
-  
+  const [showmodal, setShowmodal] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,8 +51,6 @@ export default function LocationComponent({ setAddedValue }) {
 
         setLocations(allLocations);
         setUserData(userData);
-        listusers();
-        // testfunction();
       } catch (error) {
         throw new Error(error.response.data);
       }
@@ -60,7 +58,7 @@ export default function LocationComponent({ setAddedValue }) {
 
     fetchData();
 
-    const intervalId = setInterval(fetchData, 100000);
+    const intervalId = setInterval(fetchData, 1000);
 
     // Clean up the interval when the component is unmounted
     return () => {
@@ -68,13 +66,11 @@ export default function LocationComponent({ setAddedValue }) {
     };
   }, [selectedend, selectedstart]);
 
- 
+  //getUsersList to get the sos state from the users friend ,when the username in the userData array === username in the userslist  and  the sos state is true ,store in the matcheduser aray
   let matchedUsers = [];
   const listusers = () => {
     getUsersList()
       .then((sosArray) => {
-        // console.log(sosArray);
-
         for (let i = 0; i < userData.length; i++) {
           for (let j = 0; j < sosArray.length; j++) {
             if (
@@ -86,8 +82,6 @@ export default function LocationComponent({ setAddedValue }) {
           }
         }
         setMatchedUser(matchedUsers);
-
-        //testfunction();
       })
       .catch((error) => {
         console.error(error);
@@ -104,9 +98,8 @@ export default function LocationComponent({ setAddedValue }) {
   let cpyUserLocations = [...updatedLocations];
 
   const testfunction = () => {
-    //console.log(matchedUser)
+    let cpyUserLocations = [...updatedLocations];
     cpyUserLocations = cpyUserLocations.map((location) => {
-      //console.log(location.username)
       if (matchedUser.includes(location.username)) {
         location.sos = true;
       } else {
@@ -117,13 +110,12 @@ export default function LocationComponent({ setAddedValue }) {
   };
 
   useEffect(() => {
-    setAddedValue(locations);
+    setAddedValue(cpyUserLocations);
   }, [locations, setAddedValue]);
 
   useEffect(() => {
     listusers();
-  }, []);
-
+  }, [userData]);
 
   if (filterOption === "newest") {
     cpyUserLocations = cpyUserLocations.reverse();
@@ -132,17 +124,29 @@ export default function LocationComponent({ setAddedValue }) {
   const handleFilterOptionChange = (e) => {
     setFilterOption(e.target.value);
   };
-  /*useEffect(() => {
-    testfunction();
-  }, [matchedUser]);*/
+
+  // when click on SOS btn set username to show modal with the users friend loation
+  const HandleSosB = (username) => {
+    setSelectedusername(username);
+    setShowmodal(true);
+  };
 
   testfunction();
-  //console.log(cpyUserLocations);
+
+  //when click on SOS save username and filter inside the cpyUserLocations only the locations of that user
+  const filteredLocations = selectedusername
+    ? cpyUserLocations.filter(
+        (location) => location.username === selectedusername
+      )
+    : cpyUserLocations;
+
+  console.log(cpyUserLocations);
+
   return (
     <>
       <Row>
         <Col>
-          <p>Start-date:</p>
+          <p className="text-light">Start-date:</p>
           <DatePicker
             selected={selectedstart}
             onChange={(date) => setSelectedstart(date)}
@@ -150,7 +154,7 @@ export default function LocationComponent({ setAddedValue }) {
           />
         </Col>
         <Col>
-          <p>End-date:</p>
+          <p className="text-light">End-date:</p>
           <DatePicker
             selected={selectedend}
             onChange={(date) => setSelectedend(new Date(date))}
@@ -180,31 +184,42 @@ export default function LocationComponent({ setAddedValue }) {
             <tr>
               <th scope="col">UserName</th>
               <th scope="col">Date</th>
+              <th scope="col">Time</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
             </tr>
           </thead>
           <tbody>
             {cpyUserLocations.map((location) => {
+              // if location.sos === true return red btn
+              const sosButton = location.sos ? (
+                <Button
+                  className="btn btn-danger"
+                  onClick={() => HandleSosB(location.username)}
+                >
+                  SOS
+                </Button>
+              ) : null;
+
               return (
                 <tr key={location.ID}>
                   <td>{location.username}</td>
                   <td>{location.CreatedAt.slice(0, 10)}</td>
+                  <td>{location.CreatedAt.slice(11, 16)}</td>
                   <td>{location.Latitude}</td>
                   <td>{location.Longitude}</td>
-                  <td>
-                    {location.sos ? (
-                      <Button className="btn btn-danger">SOS</Button>
-                    ) : (
-                      <p ></p>
-                    )}
-                  </td>
+                  <td>{sosButton}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      <ModalSos
+        showmodal={showmodal}
+        setShowmodal={setShowmodal}
+        filteredLocations={filteredLocations}
+      />
     </>
   );
 }

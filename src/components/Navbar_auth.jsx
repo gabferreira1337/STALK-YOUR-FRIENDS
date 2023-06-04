@@ -1,12 +1,11 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/nav.css";
 import { AuthContext } from "../contexts/auth";
-import SOS from "../components/SOS";
 
 export default function NavbAuth() {
   const { logout } = useContext(AuthContext);

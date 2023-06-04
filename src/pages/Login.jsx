@@ -51,6 +51,7 @@ export const Login = (props) => {
                   placeholder="0x1337"
                   id="username"
                   name="username"
+                  autoComplete="on"
                 />
               </Form.Group>
 
@@ -63,6 +64,7 @@ export const Login = (props) => {
                   placeholder="********"
                   id="password"
                   name="password"
+                  autoComplete="off"
                 />
               </Form.Group>
 

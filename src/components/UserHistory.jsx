@@ -2,12 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { getHistory, getUserInfo, deletePosition } from "../services/api";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/userHistory.css";
+import "../styles/MapP.css";
 
-export default function UserLocationComponent({setUserName ,setSosMode, setUid, setCountLocations, setCountFriends}) {
+export default function UserLocationComponent({
+  setUserName,
+  setSosMode,
+  setUid,
+  setCountLocations,
+  setCountFriends,
+}) {
   const [userlocations, setUserLocations] = useState([]);
-  const token =  sessionStorage.getItem("token");
-
- 
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -17,11 +22,10 @@ export default function UserLocationComponent({setUserName ,setSosMode, setUid, 
         setUserName(response.user.username);
         setUserLocations(response.user.UserPositions);
         setSosMode(response.user.sos);
-        setUid(response.user.ID)
-        setCountLocations(response.user.UserPositions.length)
-        setCountFriends(response.user.UserFriends.length)
+        setUid(response.user.ID);
+        setCountLocations(response.user.UserPositions.length);
+        setCountFriends(response.user.UserFriends.length);
         //console.log(response.user);
-       
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -59,7 +63,6 @@ export default function UserLocationComponent({setUserName ,setSosMode, setUid, 
 
   return (
     <>
-  
       <h2>Your Locations History:</h2>
       <Row>
         <Col>

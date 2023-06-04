@@ -4,15 +4,10 @@ import "../styles/coordinates.css";
 import { sosMode } from "../services/api";
 
 export default function SOS_B() {
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     sosMode();
-
-    //getuserslocat();
   };
 
   return (
