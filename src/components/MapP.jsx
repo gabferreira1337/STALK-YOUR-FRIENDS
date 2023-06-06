@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/Mapb.css";
 import "../styles/MapP.css";
 
@@ -36,6 +37,8 @@ const MapP = ({ addedValue }) => {
       map.current.remove();
     };
   }, []);
+
+
 
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize

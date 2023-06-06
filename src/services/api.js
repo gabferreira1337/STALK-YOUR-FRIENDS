@@ -128,7 +128,6 @@ export const getFollowers = async () => {
 
   try {
     const response = await api.get("/follower", config);
-    // console.log(response.data);
     // return response;
   } catch (error) {
     throw new Error(error.response.data); // Throw an error with the error message from the API
@@ -152,11 +151,11 @@ export const addFriend = async (id) => {
     );
     //console.log(response.data);
 
-    alert("User " + id + " Added");
+    alert("User  Added");
 
     // return response.data;
   } catch (error) {
-    alert("Can't add user: " + id);
+    alert("Can't add user: ");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
@@ -179,11 +178,11 @@ export const unfollowfriend = async (id) => {
     );
     //console.log(response.data);
 
-    alert("User " + id + " Unfollowed");
+    alert("User Unfollowed");
 
     // return response.data;
   } catch (error) {
-    alert("Can't unfollow user: " + id + "Try again later");
+    alert("Can't unfollow user: Try again later");
     throw new Error(error.response.data); // Throw an error with the error message from the API
   }
 };
@@ -237,10 +236,6 @@ export const getsos = async (username) => {
   try {
     const response = await api.get(`/user/search/${username}`, config);
 
-   
-
-     //console.log(response.data.users)
-   // console.log(response.data)
     return response.data.users;
   } catch (error) {
     alert("Can't check SOS state");
@@ -261,9 +256,6 @@ export const getfollowing = async () => {
   try {
     const response = await api.get("/follower/following", config);
 
-    // console.log(response.data);
-
-    // console.log(typeof(response.data.locations))
 
     return response.data;
   } catch (error) {
@@ -273,8 +265,6 @@ export const getfollowing = async () => {
 
 export const sosMode = async (id) => {
   const token =  sessionStorage.getItem("token");
-
-  // console.log(typeof(id));
 
   const config = {
     headers: { Authorization: `${token}` },
@@ -312,10 +302,7 @@ export const getUsersName = async (username) => {
   try {
     const response = await api.get(`/user/search/${username}`, config);
 
-    //console.log(response.data);
-
-    // console.log(typeof(response.data.locations))
-
+   
     return response.data;
   } catch (error) {
     throw new Error(error.response.data); // Throw an error with the error message from the API
@@ -335,10 +322,6 @@ export const getUsersList = async () => {
 
   try {
     const response = await api.get('/user/', config);
-
-    //console.log(response.data);
-
-    // console.log(typeof(response.data.locations))
 
     return response.data.users;
   } catch (error) {

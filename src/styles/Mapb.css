@@ -1,8 +1,8 @@
 
 .map-container{
-height: 500px;
- width: 500px;
- 
+height: 800px;
+ width: 800px;
+ margin-left: 3rem;
 }
 
 
@@ -22,24 +22,30 @@ height: 500px;
   padding: 0rem;
 }
 
-
-@media (min-width: 992px) {
+/*smartphone*/
+@media (max-width: 992px) {
   .map-container {
- margin-left: 370px;
- height: 800px;
- width: 800px;
+margin-left: 0px;
+ height: 500px;
+ width: 500px;
+ margin-top: 5rem;
  border-color: aliceblue;
 }
 }
 
-@media (min-width: 1280px){
+
+
+@media (min-width: 1800px) {
   .map-container {
-  margin-left: 200px;
-  height: 800px;
-  width: 800px;
-  border-color: aliceblue;
- }
+ margin-left: 10rem;
+ height: 800px;
+ width: 800px;
+ margin-top: 0rem;
+ border-color: aliceblue;
 }
+}
+
+
 
 
 

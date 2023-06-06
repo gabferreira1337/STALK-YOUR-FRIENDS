@@ -140,7 +140,7 @@ export default function LocationComponent({ setAddedValue }) {
       )
     : cpyUserLocations;
 
-  console.log(cpyUserLocations);
+  //console.log(cpyUserLocations);
 
   return (
     <>

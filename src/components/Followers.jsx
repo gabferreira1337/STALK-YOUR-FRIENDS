@@ -10,12 +10,18 @@ import "../styles/FriendsList.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 export default function Followers() {
-  const [following, setFollowing] = useState({});
+  const [followersArray, setFollowersArray] = useState([]);
 
+  // get followers and store it in following
   useEffect(() => {
-    getfollowing().then((resolved) => {
-      setFollowing(resolved);
-    });
+    getfollowing()
+      .then((response) => {
+        // extract values from response to followersarray
+        setFollowersArray(Object.values(response));
+      })
+      .catch((error) => {
+        console.error("Couldn't get followers list");
+      });
 
     // Fetch locations every 1 minute
     const intervalId = setInterval(getfollowing, 10000);
@@ -26,23 +32,19 @@ export default function Followers() {
     };
   }, []);
 
-  const followersArray = Object.values(following);
-
-  // console.log(followersArray[0]);
-
+  // render List with each follower
   return (
     <>
       <Row>
-        <h2>Followers</h2>
         {followersArray.length > 0 ? (
           <Col sm={13}>
             <List
               className="friends-list"
               sx={{ width: "100%", maxWidth: 260 }}
             >
-              {followersArray[0].map((follower, index) => (
-                <>
-                  <ListItem alignItems="flex-start" key={index}>
+              {followersArray[0].map((follower) => (
+                <React.Fragment key={follower.id}>
+                  <ListItem alignItems="flex-start">
                     <ListItemText
                       className="list-text"
                       primary={
@@ -55,12 +57,11 @@ export default function Followers() {
                           Username: {follower.username}
                         </Typography>
                       }
-                      secondary={"ID: " + follower.id}
                     />
                   </ListItem>
 
                   <Divider variant="inset" component="li" />
-                </>
+                </React.Fragment>
               ))}
             </List>
           </Col>

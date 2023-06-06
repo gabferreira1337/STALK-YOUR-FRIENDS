@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import "../styles/coordinates.css";
 import { submitCoord } from "../services/api";
 
-export default function FastCoordinates({ setAddedValue }) {
+export default function FastCoordinates() {
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Retrieve user's coordinates using Geolocation API
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -18,7 +18,7 @@ export default function FastCoordinates({ setAddedValue }) {
           setLat(latitude);
           setLng(longitude);
 
-          // Send the coordinates in a request here
+        
           submitCoord(lat, lng);
         },
         (error) => {

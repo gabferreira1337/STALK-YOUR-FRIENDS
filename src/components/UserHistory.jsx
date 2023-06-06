@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { getHistory, getUserInfo, deletePosition } from "../services/api";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/userHistory.css";
@@ -7,12 +7,11 @@ import "../styles/MapP.css";
 export default function UserLocationComponent({
   setUserName,
   setSosMode,
-  setUid,
   setCountLocations,
   setCountFriends,
 }) {
   const [userlocations, setUserLocations] = useState([]);
-  const token = sessionStorage.getItem("token");
+  
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -22,7 +21,6 @@ export default function UserLocationComponent({
         setUserName(response.user.username);
         setUserLocations(response.user.UserPositions);
         setSosMode(response.user.sos);
-        setUid(response.user.ID);
         setCountLocations(response.user.UserPositions.length);
         setCountFriends(response.user.UserFriends.length);
         //console.log(response.user);
@@ -34,14 +32,8 @@ export default function UserLocationComponent({
     // Fetch locations initially
     fetchLocations();
 
-    // Fetch locations every 5 seconds
-    const intervalId = setInterval(fetchLocations, 30000);
-
-    // Clean up the interval when the component is unmounted
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []); // Empty dependency array to only run the effect once
+    
+  }, []); 
 
   const handleClick = (e, locationID) => {
     e.preventDefault(e);

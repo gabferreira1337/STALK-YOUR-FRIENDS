@@ -1,12 +1,11 @@
-import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { addFriend, getUsersName } from "../services/api";
 import "../styles/FriendsList.css";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
-export default function AddFriend({ setChangevar }) {
+export default function AddFriend({ setChangevar,changevar}) {
   const [userFriend, setUserFriend] = useState();
-  const [usernames, setUsernames] = useState([]);
+  const [usernamesArray, setUsernamesArray] = useState([]);
   const [userid, setUserID] = useState("");
 
   const handle_Click = (e) => {
@@ -16,14 +15,19 @@ export default function AddFriend({ setChangevar }) {
 
     addFriend(userid);
 
-    setChangevar(userid);
+    //circular so increment until 100 and back to 0
+    setChangevar((changevar +1) % 100);
+    setUserFriend("")
   };
 
+
+  //get all users and store the names to show while searching in
   useEffect(() => {
     const fetchUsernames = async () => {
       try {
         const response = await getUsersName(userFriend);
-        setUsernames(response); // Assuming the API response returns an array of usernames
+       
+        setUsernamesArray(response.users);
       } catch (error) {
         throw new Error(error.response.data);
       }
@@ -32,14 +36,14 @@ export default function AddFriend({ setChangevar }) {
     fetchUsernames();
   }, [userFriend]);
 
-  const usernamesArray = usernames.users;
+  
 
   const handleUsernameClick = (username, user_id) => {
     setUserFriend(username); // set input value
 
     setUserID(user_id); // get the userID for the request
 
-    setUsernames([]); // clear array with usernames
+    setUsernamesArray([]); // clear array with usernames
   };
 
   return (
@@ -62,7 +66,7 @@ export default function AddFriend({ setChangevar }) {
                 {userFriend &&
                   usernamesArray.map((username, index) => (
                     <li
-                      key={index}
+                      key={username.ID}
                       onClick={() =>
                         handleUsernameClick(username.username, username.ID)
                       }
@@ -76,7 +80,7 @@ export default function AddFriend({ setChangevar }) {
             )}
           </div>
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-success "
             type="button"
             onClick={handle_Click}
           >

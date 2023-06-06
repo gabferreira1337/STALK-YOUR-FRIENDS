@@ -29,10 +29,10 @@ const HomePage = () => {
       <NavbAuth />
       <Container className="container  d-flex " id="form-container">
         <Row className="justify-content-between ">
-          <Col sm={7} className="" id="col-1">
+          <Col sm={9} className="" id="col-1">
             <LocationComponent setAddedValue={setAddedValue} />
           </Col>
-          <Col sm={5} className="col-2 ">
+          <Col sm={3} className="col-2 flex-end">
             <MapP addedValue={addedValue} />
           </Col>
         </Row>
