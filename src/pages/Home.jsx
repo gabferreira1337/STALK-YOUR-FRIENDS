@@ -7,11 +7,10 @@ import Coordinates from "../components/Coordinates";
 import LocationComponent from "../components/FollowersLoc";
 import SOS_B from "../components/SOSB";
 import FastCoordinates from "../components/FastCoordinates";
-import "../styles/Mapb.css"
+import "../styles/Mapb.css";
 
 const HomePage = () => {
   const { logout } = useContext(AuthContext);
-  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [addedValue, setAddedValue] = useState([]);

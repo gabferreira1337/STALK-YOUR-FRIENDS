@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getHistory, getUserInfo, deletePosition } from "../services/api";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { getUserInfo, deletePosition } from "../services/api";
+import { Button,Row, Col } from "react-bootstrap";
 import "../styles/userHistory.css";
 import "../styles/MapP.css";
 
@@ -11,6 +11,9 @@ export default function UserLocationComponent({
   setCountFriends,
 }) {
   const [userlocations, setUserLocations] = useState([]);
+  const [cpyUserLocations, setCpyUserLocations] = useState([]);
+  const [filterOption, setFilterOption] = useState("newest");
+  const [changedelete, setChangeDelete] = useState(0);
   
 
   useEffect(() => {
@@ -23,7 +26,9 @@ export default function UserLocationComponent({
         setSosMode(response.user.sos);
         setCountLocations(response.user.UserPositions.length);
         setCountFriends(response.user.UserFriends.length);
-        //console.log(response.user);
+        setCpyUserLocations(response.user.UserPositions);
+        
+        
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -33,25 +38,36 @@ export default function UserLocationComponent({
     fetchLocations();
 
     
-  }, []); 
+  }, [changedelete]); 
 
   const handleClick = (e, locationID) => {
     e.preventDefault(e);
-    deletePosition(locationID);
+
+    deletePosition(locationID)
+    .then(() =>{
+      setChangeDelete((changedelete +1) % 100);
+    })
+    
   };
 
-  const [filterOption, setFilterOption] = useState("newest");
 
-  let cpyUserLocations = [...userlocations];
 
-  // if user chooses newest reverse so it displays from newest to oldest
-  if (filterOption === "oldest") {
-    cpyUserLocations = cpyUserLocations.reverse();
-  }
+ // if user chooses newest reverse so it displays from newest to oldest
+  useEffect(() => {
+    if (filterOption === "oldest") {
+      setCpyUserLocations([...userlocations].reverse());
+    } else {
+      setCpyUserLocations([...userlocations]);
+    }
+  }, [userlocations, filterOption]);
 
+
+ 
   const handleFilterOptionChange = (e) => {
     setFilterOption(e.target.value);
   };
+
+  
 
   return (
     <>
@@ -69,8 +85,8 @@ export default function UserLocationComponent({
                 value={filterOption}
                 onChange={handleFilterOptionChange}
               >
-                <option value="oldest">Newest</option>
-                <option value="newest">Oldest</option>
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
               </select>
             </label>
           </div>

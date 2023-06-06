@@ -4,10 +4,10 @@ import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import { api, unfollowfriend, fetchUsersHistory } from "../services/api";
 import "../styles/FriendsList.css";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import {Button, Row, Col } from "react-bootstrap";
 import AddFriend from "./AddFriend";
 import CheckLocations from "./CheckLocations";
 
@@ -39,7 +39,7 @@ export default function FriendsList() {
     });
 
     setUserInfo(userLocations);
-  }, [users, usersLastLoc,changevar, changeunf]); // update whenever these variabels change
+  }, [users, usersLastLoc, changevar, changeunf]); // update whenever these variabels change
 
   // get friends and store in Array to render on a list
   const fetchUsers = async () => {
@@ -136,25 +136,29 @@ export default function FriendsList() {
                         </Typography>
                       }
                     />
+                    <div className="d-flex flex-column">
                     <Button
-                      className="btn btn-sm"
+                      className="btn btn-sm " id="btn-unf"
                       onClick={(e) => handle_event_click_unfollow(user.user.id)}
                       type="button"
                     >
                       UNFOLLOW
                     </Button>
+                    </div>
                   </ListItem>
                   {user.locations.length > 0 && (
                     <>
+                    <div className="last-loc">
                       <Typography variant="subtitle2" color="text.primary">
                         Last Location Registered:
                       </Typography>
-                      <Typography variant="body2" color="text.primary">
+                      <Typography variant="body2" color="text.primary" >
                         Latitude: {user.locations[0].Lat}
                       </Typography>
-                      <Typography variant="body2" color="text.primary">
+                      <Typography variant="body2" color="text.primary" >
                         Longitude: {user.locations[0].Long}
                       </Typography>
+                      </div>
                     </>
                   )}
                   <Button

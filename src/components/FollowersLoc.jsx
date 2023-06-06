@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { deletePosition, getUsersList } from "../services/api";
+import { getUsersList } from "../services/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../services/api";
@@ -14,7 +14,7 @@ export default function LocationComponent({ setAddedValue }) {
   const [selectedend, setSelectedend] = useState(new Date("2024-01-01"));
   const [selectedusername, setSelectedusername] = useState([]);
   const [userData, setUserData] = useState([]);
-  const [filterOption, setFilterOption] = useState("oldest");
+  const [filterOption, setFilterOption] = useState("newest");
   const [matchedUser, setMatchedUser] = useState([]);
   const [showmodal, setShowmodal] = useState(null);
 
@@ -26,10 +26,12 @@ export default function LocationComponent({ setAddedValue }) {
           headers: { Authorization: token },
         };
 
+        // get friends list
         const response = await api.get("/follower/", config);
         const userData = Object.values(response.data.data);
         const allLocations = [];
 
+        // for each friend get locations
         for (const user of userData) {
           const data = {
             end: selectedend.toISOString().slice(0, 10),
@@ -88,7 +90,7 @@ export default function LocationComponent({ setAddedValue }) {
       });
   };
 
-  // insert into updated locations each
+  // insert into updated locations each location of user comparing user id from friends list and locatins
   const updatedLocations = locations.map((location) => ({
     ...location,
     username:
@@ -97,6 +99,7 @@ export default function LocationComponent({ setAddedValue }) {
 
   let cpyUserLocations = [...updatedLocations];
 
+  // check if each username in cpyuserlcations array is included in the matchedUsers and add true sos state if it is included
   const testfunction = () => {
     let cpyUserLocations = [...updatedLocations];
     cpyUserLocations = cpyUserLocations.map((location) => {
@@ -109,6 +112,7 @@ export default function LocationComponent({ setAddedValue }) {
     });
   };
 
+  // store in addedValue array to send via props to map everytime locations array change
   useEffect(() => {
     setAddedValue(cpyUserLocations);
   }, [locations, setAddedValue]);
@@ -117,8 +121,15 @@ export default function LocationComponent({ setAddedValue }) {
     listusers();
   }, [userData]);
 
+  // if b - a return negative sort date a before date b
   if (filterOption === "newest") {
-    cpyUserLocations = cpyUserLocations.reverse();
+    cpyUserLocations.sort(
+      (a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt)
+    );
+  } else {
+    cpyUserLocations.sort(
+      (a, b) => new Date(a.CreatedAt) - new Date(b.CreatedAt)
+    );
   }
 
   const handleFilterOptionChange = (e) => {
@@ -139,8 +150,6 @@ export default function LocationComponent({ setAddedValue }) {
         (location) => location.username === selectedusername
       )
     : cpyUserLocations;
-
-  //console.log(cpyUserLocations);
 
   return (
     <>
@@ -173,8 +182,8 @@ export default function LocationComponent({ setAddedValue }) {
             value={filterOption}
             onChange={handleFilterOptionChange}
           >
-            <option value="oldest">Newest</option>
-            <option value="newest">Oldest</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
           </select>
         </label>
       </div>

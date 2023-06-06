@@ -38,8 +38,6 @@ const MapP = ({ addedValue }) => {
     };
   }, []);
 
-
-
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
     map.current.on("move", () => {

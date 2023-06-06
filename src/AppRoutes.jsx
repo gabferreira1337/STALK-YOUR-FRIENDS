@@ -21,7 +21,7 @@ const AppRoutes = () => {
     const location = useLocation();
 
     if (loading) {
-      //console.log('hello');
+     
       return <div className="loading">Carregando...</div>;
     }
 
@@ -35,7 +35,7 @@ const AppRoutes = () => {
   };
 
   return (
-    <Router>
+    <Router>  
       <AuthProvider>
         <Routes>
           <Route exact path="/login" element={<Login />} />

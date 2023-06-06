@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { api, createSession, createUser } from "../services/api";
 
-export const AuthContext = createContext(); // context is used to save in the memory
+export const AuthContext = createContext(); // context is used to save in the memory (global)
 
 export const AuthProvider = ({ children }) => {
   // pass everything inside AuthProvider with props children
@@ -17,10 +17,8 @@ export const AuthProvider = ({ children }) => {
   // !! = cast to boolean
 
   useEffect(() => {
-    // comeca e os componentes sao renderizados sem esperar asincrono
-
-    const recoveredUser =  sessionStorage.getItem("username");
-    const token =  sessionStorage.getItem("token");
+    const recoveredUser = sessionStorage.getItem("username");
+    const token = sessionStorage.getItem("token");
 
     if (recoveredUser && token) {
       //setUser(JSON.parse(recoveredUser)); //
@@ -75,6 +73,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
+  // store if user is authenticated , username , login , logout , register methods and loading values (!! boolean test)
   return (
     <AuthContext.Provider
       value={{ authenticated: !!user, user, loading, register, login, logout }}

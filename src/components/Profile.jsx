@@ -13,8 +13,10 @@ import {
 } from "mdb-react-ui-kit";
 import SOSBUser from "../components/SOSBUser";
 import ModalFollowers from "./ModalFollowers";
+import ModalAlertTime from "./ModalAlertTime"
 import { getfollowing } from "../services/api";
 import "../styles/Profile.css";
+import { Button } from "react-bootstrap";
 
 export default function Profile({
   username,
@@ -23,6 +25,7 @@ export default function Profile({
   countfriends,
 }) {
   const [showmodal, setShowmodal] = useState(false);
+  const [showAlertModal, setShowAlertModel] = useState(false);
   const [countfollowers, setCountFollowers] = useState(0);
 
   // get followers and store it in following
@@ -61,7 +64,7 @@ export default function Profile({
                 <MDBCardBody className="text-center">
                   <div className="mt-3 mb-4">
                     <MDBCardImage
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
                       className="rounded-circle"
                       fluid
                       style={{ width: "75px" }}
@@ -70,7 +73,7 @@ export default function Profile({
 
                   <MDBCardText className="text-muted mb-4">
                     {username} <span className="mx-2">|</span>{" "}
-                    <SOSBUser sosmode={sosmode} />
+                    <SOSBUser sosmode={sosmode} /> <Button className="btn btn-sm" onClick={() => setShowAlertModel(true)}> AlertTime </Button> 
                   </MDBCardText>
 
                   <div className="d-flex justify-content-between text-center mt-5 mb-2">
@@ -109,6 +112,7 @@ export default function Profile({
         </MDBContainer>
       </div>
       <ModalFollowers showmodal={showmodal} setShowmodal={setShowmodal} />
+      <ModalAlertTime setShowAlertModel ={setShowAlertModel} showAlertModal={showAlertModal}/>
     </>
   );
 }
