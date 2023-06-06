@@ -5,15 +5,13 @@ import Mapb from "../components/Mapb";
 import { AuthContext, AuthProvider } from "../contexts/auth";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
-export const Register = (props) => {
-  const navigate_home = useNavigate("");
+export const Register = () => {
   const navigate_login = useNavigate("");
 
   const { authenticated, login, register } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  
   const validatePassword = () => {
     const passRegex =
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$.;%^&*`~+=-])[A-Za-z\d!@#$.;%^&*`~,<>=+-]{8,}$/;
@@ -26,7 +24,6 @@ export const Register = (props) => {
     if (!validatePassword()) {
       return;
     }
-
 
     register(username, password);
   };

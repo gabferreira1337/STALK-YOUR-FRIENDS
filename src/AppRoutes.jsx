@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
   Navigate,
-} from "react-router-dom"; //
+} from "react-router-dom";
 
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -17,11 +17,8 @@ import { useLocation } from "react-router-dom";
 const AppRoutes = () => {
   const Private = ({ children }) => {
     const { authenticated, loading } = useContext(AuthContext);
-    //  console.log({authenticated});
-    const location = useLocation();
 
     if (loading) {
-     
       return <div className="loading">Carregando...</div>;
     }
 
@@ -35,7 +32,7 @@ const AppRoutes = () => {
   };
 
   return (
-    <Router>  
+    <Router>
       <AuthProvider>
         <Routes>
           <Route exact path="/login" element={<Login />} />

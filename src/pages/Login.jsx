@@ -6,9 +6,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 
-const LOGIN_URL = "/auth/login";
-
-export const Login = (props) => {
+export const Login = () => {
   const navigate_register = useNavigate();
   const { authenticated, login } = useContext(AuthContext);
 
@@ -31,7 +29,7 @@ export const Login = (props) => {
       return;
     }
 
-    login(username, password); // context + api implementation
+    login(username, password);
   };
 
   return (

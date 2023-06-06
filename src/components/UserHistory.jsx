@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getUserInfo, deletePosition } from "../services/api";
-import { Button,Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import "../styles/userHistory.css";
 import "../styles/MapP.css";
 
@@ -14,7 +14,6 @@ export default function UserLocationComponent({
   const [cpyUserLocations, setCpyUserLocations] = useState([]);
   const [filterOption, setFilterOption] = useState("newest");
   const [changedelete, setChangeDelete] = useState(0);
-  
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -27,8 +26,6 @@ export default function UserLocationComponent({
         setCountLocations(response.user.UserPositions.length);
         setCountFriends(response.user.UserFriends.length);
         setCpyUserLocations(response.user.UserPositions);
-        
-        
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -36,23 +33,17 @@ export default function UserLocationComponent({
 
     // Fetch locations initially
     fetchLocations();
-
-    
-  }, [changedelete]); 
+  }, [changedelete]);
 
   const handleClick = (e, locationID) => {
     e.preventDefault(e);
 
-    deletePosition(locationID)
-    .then(() =>{
-      setChangeDelete((changedelete +1) % 100);
-    })
-    
+    deletePosition(locationID).then(() => {
+      setChangeDelete((changedelete + 1) % 100);
+    });
   };
 
-
-
- // if user chooses newest reverse so it displays from newest to oldest
+  // if user chooses newest reverse so it displays from newest to oldest
   useEffect(() => {
     if (filterOption === "oldest") {
       setCpyUserLocations([...userlocations].reverse());
@@ -61,13 +52,9 @@ export default function UserLocationComponent({
     }
   }, [userlocations, filterOption]);
 
-
- 
   const handleFilterOptionChange = (e) => {
     setFilterOption(e.target.value);
   };
-
-  
 
   return (
     <>

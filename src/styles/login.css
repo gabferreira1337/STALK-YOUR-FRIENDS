@@ -38,13 +38,9 @@ button {
   margin: 0;
 }
 
-
-#col-1{
-
-
+#col-1 {
   margin-top: 75px;
 }
-
 
 .password-validation-message {
   color: red;

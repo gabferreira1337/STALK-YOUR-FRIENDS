@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { api, createSession, createUser } from "../services/api";
 
-export const AuthContext = createContext(); // context is used to save in the memory (global)
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   // pass everything inside AuthProvider with props children
@@ -21,20 +21,18 @@ export const AuthProvider = ({ children }) => {
     const token = sessionStorage.getItem("token");
 
     if (recoveredUser && token) {
-      //setUser(JSON.parse(recoveredUser)); //
       setUser(recoveredUser);
       api.defaults.headers.Authorization = " ${token}";
     }
 
-    setLoading(false); // ajuda no carregamento da pagina
-  }, []); // independente do estado
+    setLoading(false);
+  }, []);
 
   const register = async (username, password) => {
     try {
       const response = await createUser(username, password);
-      // console.log("Navigating");
+
       navigate("/login");
-      //   console.log("register", response);
     } catch (error) {
       console.error("API request error:", error);
     }
@@ -53,17 +51,14 @@ export const AuthProvider = ({ children }) => {
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
       setUser(loggedUser);
-      // console.log("Navigating");
-      navigate("/");
 
-      //  console.log("Login", response);
+      navigate("/");
     } catch (error) {
       console.error("API request error:", error);
     }
   };
 
   const logout = () => {
-    // console.log("logout");
     sessionStorage.removeItem("username"); // remove form  session storage the credentials
     sessionStorage.removeItem("token");
 

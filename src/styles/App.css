@@ -4,7 +4,6 @@
   padding: 0;
 }
 
-
 .login-form,
 .register-form {
   display: flex;
@@ -39,5 +38,4 @@ button {
 
 .auth-form-container {
   background-color: black;
-  
 }

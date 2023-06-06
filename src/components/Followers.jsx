@@ -14,25 +14,24 @@ export default function Followers() {
 
   // get followers and store it in following
   useEffect(() => {
-    getfollowing()
-      .then((response) => {
-        // extract values from response to followersarray
+    const fetchData = async () => {
+      try {
+        const response = await getfollowing();
         setFollowersArray(Object.values(response));
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Couldn't get followers list");
-      });
+      }
+    };
 
-    // Fetch locations every 1 minute
-    const intervalId = setInterval(getfollowing, 10000);
+    fetchData();
 
-    // Clean up the interval when the component is unmounted
+    const intervalId = setInterval(fetchData, 10000);
+
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
-  // render List with each follower
   return (
     <>
       <Row>

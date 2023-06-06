@@ -4,10 +4,10 @@ import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { api, unfollowfriend, fetchUsersHistory } from "../services/api";
 import "../styles/FriendsList.css";
-import {Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import AddFriend from "./AddFriend";
 import CheckLocations from "./CheckLocations";
 
@@ -95,8 +95,6 @@ export default function FriendsList() {
 
       setUsersLastLoc(response.data.userLocs);
     } catch (error) {
-      alert("Can't update your friends list");
-
       throw new Error(error.response.data); // Throw an error with the error message from the API
     }
   };
@@ -137,27 +135,30 @@ export default function FriendsList() {
                       }
                     />
                     <div className="d-flex flex-column">
-                    <Button
-                      className="btn btn-sm " id="btn-unf"
-                      onClick={(e) => handle_event_click_unfollow(user.user.id)}
-                      type="button"
-                    >
-                      UNFOLLOW
-                    </Button>
+                      <Button
+                        className="btn btn-sm "
+                        id="btn-unf"
+                        onClick={(e) =>
+                          handle_event_click_unfollow(user.user.id)
+                        }
+                        type="button"
+                      >
+                        UNFOLLOW
+                      </Button>
                     </div>
                   </ListItem>
                   {user.locations.length > 0 && (
                     <>
-                    <div className="last-loc">
-                      <Typography variant="subtitle2" color="text.primary">
-                        Last Location Registered:
-                      </Typography>
-                      <Typography variant="body2" color="text.primary" >
-                        Latitude: {user.locations[0].Lat}
-                      </Typography>
-                      <Typography variant="body2" color="text.primary" >
-                        Longitude: {user.locations[0].Long}
-                      </Typography>
+                      <div className="last-loc">
+                        <Typography variant="subtitle2" color="text.primary">
+                          Last Location Registered:
+                        </Typography>
+                        <Typography variant="body2" color="text.primary">
+                          Latitude: {user.locations[0].Lat}
+                        </Typography>
+                        <Typography variant="body2" color="text.primary">
+                          Longitude: {user.locations[0].Long}
+                        </Typography>
                       </div>
                     </>
                   )}

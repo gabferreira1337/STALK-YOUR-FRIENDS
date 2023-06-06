@@ -1,6 +1,5 @@
 .marker {
-
-  background-image: url('../styles/img/map-marker.png');
+  background-image: url("../styles/img/map-marker.png");
   background-size: cover;
   background-color: transparent;
   width: 50px;
@@ -10,19 +9,12 @@
   color: black;
 }
 
-
-
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  
+  font-family: "Open Sans", sans-serif;
 }
 
-
-
-.mapboxgl-popup-content{
-
-
+.mapboxgl-popup-content {
   color: black;
 }
 
@@ -30,13 +22,11 @@
   max-width: 200px;
 }
 
-
-.description{
+.description {
   color: rgb(218, 30, 30);
 }
 
 .marker-sos {
   /* if sos === true */
-  background-image: url('../styles/img/map-marker2.jpg');
-  
+  background-image: url("../styles/img/map-marker2.jpg");
 }

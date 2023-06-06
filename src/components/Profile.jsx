@@ -13,7 +13,7 @@ import {
 } from "mdb-react-ui-kit";
 import SOSBUser from "../components/SOSBUser";
 import ModalFollowers from "./ModalFollowers";
-import ModalAlertTime from "./ModalAlertTime"
+import ModalAlertTime from "./ModalAlertTime";
 import { getfollowing } from "../services/api";
 import "../styles/Profile.css";
 import { Button } from "react-bootstrap";
@@ -30,19 +30,19 @@ export default function Profile({
 
   // get followers and store it in following
   useEffect(() => {
-    getfollowing()
-      .then((response) => {
-        // extract values from response to followersarray
+    const fetchData = async () => {
+      try {
+        const response = await getfollowing();
         setCountFollowers(response.data.length);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Couldn't get followers");
-      });
+      }
+    };
 
-    // Fetch locations every 1 minute
-    const intervalId = setInterval(getfollowing, 10000);
+    fetchData();
 
-    // Clean up the interval when the component is unmounted
+    const intervalId = setInterval(fetchData, 10000);
+
     return () => {
       clearInterval(intervalId);
     };
@@ -73,7 +73,14 @@ export default function Profile({
 
                   <MDBCardText className="text-muted mb-4">
                     {username} <span className="mx-2">|</span>{" "}
-                    <SOSBUser sosmode={sosmode} /> <Button className="btn btn-sm" onClick={() => setShowAlertModel(true)}> AlertTime </Button> 
+                    <SOSBUser sosmode={sosmode} />{" "}
+                    <Button
+                      className="btn btn-sm"
+                      onClick={() => setShowAlertModel(true)}
+                    >
+                      {" "}
+                      AlertTime{" "}
+                    </Button>
                   </MDBCardText>
 
                   <div className="d-flex justify-content-between text-center mt-5 mb-2">
@@ -112,7 +119,10 @@ export default function Profile({
         </MDBContainer>
       </div>
       <ModalFollowers showmodal={showmodal} setShowmodal={setShowmodal} />
-      <ModalAlertTime setShowAlertModel ={setShowAlertModel} showAlertModal={showAlertModal}/>
+      <ModalAlertTime
+        setShowAlertModel={setShowAlertModel}
+        showAlertModal={showAlertModal}
+      />
     </>
   );
 }

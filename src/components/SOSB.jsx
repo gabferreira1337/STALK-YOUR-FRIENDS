@@ -9,13 +9,16 @@ export default function SOS_B() {
 
   // get the users info and store sos state , everytime user click on the sos button change the sosVar and do the request again
   useEffect(() => {
-    getUserInfo()
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await getUserInfo();
         setSos(response.user.sos);
-      })
-      .catch((response) => {
-        console.error("Couldn't get users sos state");
-      });
+      } catch (error) {
+        console.error("Couldn't get user's SOS state");
+      }
+    };
+
+    fetchData();
   }, [sosVar]);
 
   const handleSubmit = async (e) => {

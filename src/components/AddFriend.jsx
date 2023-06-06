@@ -9,7 +9,6 @@ export default function AddFriend({ setChangevar,changevar}) {
   const [userid, setUserID] = useState("");
 
   const handle_Click = (e) => {
-    // console.log(userFriend);
 
     e.preventDefault();
 
