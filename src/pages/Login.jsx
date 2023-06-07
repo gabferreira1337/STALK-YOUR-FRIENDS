@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react"; // hook para guardar estado
 import { AuthContext } from "../contexts/auth";
 import Navb from "../components/Navbar";
-import Mapb from "../components/Mapb";
+import MapP from "../components/MapP";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const navigate_register = useNavigate();
-  const { authenticated, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -83,7 +83,7 @@ export const Login = () => {
           </Col>
 
           <Col sm={6} className="col-2 ">
-            <Mapb />
+            <MapP />
           </Col>
         </Row>
       </Container>

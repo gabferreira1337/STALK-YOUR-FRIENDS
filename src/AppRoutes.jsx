@@ -12,7 +12,6 @@ import { Register } from "./pages/Register";
 import { AuthProvider, AuthContext } from "./contexts/auth";
 import HomePage from "./pages/Home";
 import AccountPage from "./pages/Account";
-import { useLocation } from "react-router-dom";
 
 const AppRoutes = () => {
   const Private = ({ children }) => {

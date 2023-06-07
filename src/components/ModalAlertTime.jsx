@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { api } from "../services/api";
 
 const ModalAlertTime = ({ showAlertModal, setShowAlertModel }) => {
+  const [changeAlert, setChangeAlert] = useState(0);
   useEffect(() => {
     const getAlertTime = async (alertTime) => {
       const token = sessionStorage.getItem("token");
@@ -50,28 +51,34 @@ const ModalAlertTime = ({ showAlertModal, setShowAlertModel }) => {
   const handleAlert = (e) => {
     e.preventDefault();
 
-    postAlertTime(alertTime);
+    postAlertTime(alertTime).then(() => {
+      setChangeAlert((changeAlert + 1) % 100);
+    });
   };
+
   return (
     <>
-      <Modal show={showAlertModal} onHide={() => setShowAlertModel(false)}>
-        <Modal.Header closeButton className="modal-follower">
-          <Modal.Title>Set Alert Time</Modal.Title>
-        </Modal.Header>
+      <Modal
+        show={showAlertModal}
+        onHide={() => setShowAlertModel(false)}
+        id="modal-alert"
+      >
+        <Modal.Header closeButton className="modal-follower"></Modal.Header>
         <Modal.Body className="modal-follower">
           <input
             type="text"
             value={alertTime}
             onChange={(e) => setAlertTime(e.target.value)}
-            placeholder="Enter alert time in hours"
+            placeholder="Your alert time: "
           />
         </Modal.Body>
         <Modal.Footer className="modal-follower">
-          <Button variant="secondary" onClick={() => setShowAlertModel(false)}>
-            Close
-          </Button>
-          <button type="button" class="btn btn-primary" onClick={handleAlert}>
-            Save changes
+          <button
+            type="button"
+            className="btn btn-primary "
+            onClick={handleAlert}
+          >
+            Change Alert Time
           </button>
         </Modal.Footer>
       </Modal>

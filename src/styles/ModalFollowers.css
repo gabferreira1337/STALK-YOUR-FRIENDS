@@ -1,3 +1,16 @@
-.modal-follower {
+.modal-content {
   background-color: aliceblue;
+}
+
+.follower-div {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#modal-follower {
+  width: 300px;
+}
+
+#modal-alert {
+  width: 300px;
 }

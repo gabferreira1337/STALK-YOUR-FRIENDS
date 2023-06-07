@@ -7,9 +7,6 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
-  MDBTypography,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 import SOSBUser from "../components/SOSBUser";
 import ModalFollowers from "./ModalFollowers";
@@ -23,10 +20,16 @@ export default function Profile({
   sosmode,
   countlocations,
   countfriends,
+  addedfollower,
+  setAddedFollower,
 }) {
   const [showmodal, setShowmodal] = useState(false);
   const [showAlertModal, setShowAlertModel] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [countfollowers, setCountFollowers] = useState(0);
+  const [imageSrc, setImageSrc] = useState(
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+  );
 
   // get followers and store it in following
   useEffect(() => {
@@ -54,6 +57,20 @@ export default function Profile({
     setShowmodal(true);
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (toggle) {
+      setImageSrc(
+        "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+      );
+    } else {
+      setImageSrc(
+        "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+      );
+    }
+    setToggle(!toggle);
+  };
+
   return (
     <>
       <div className="vh-50" style={{ backgroundColor: "" }}>
@@ -64,16 +81,18 @@ export default function Profile({
                 <MDBCardBody className="text-center">
                   <div className="mt-3 mb-4">
                     <MDBCardImage
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                      src={imageSrc}
                       className="rounded-circle"
                       fluid
                       style={{ width: "75px" }}
+                      onClick={handleClick}
                     />
                   </div>
 
                   <MDBCardText className="text-muted mb-4">
                     {username} <span className="mx-2">|</span>{" "}
                     <SOSBUser sosmode={sosmode} />{" "}
+                    <span className="mx-2">|</span>
                     <Button
                       className="btn btn-sm"
                       onClick={() => setShowAlertModel(true)}
@@ -97,7 +116,7 @@ export default function Profile({
                         {countlocations}
                       </MDBCardText>
                       <MDBCardText className="small text-muted mb-0">
-                        Localizations Registered
+                        Locations Registered
                       </MDBCardText>
                     </div>
                     <div>
@@ -105,8 +124,9 @@ export default function Profile({
                         {countfollowers}
                       </MDBCardText>
                       <MDBCardText
-                        className="small text-muted mb-0"
+                        className="small text-muted mb-0 "
                         onClick={HandleFollower}
+                        id="followers-1"
                       >
                         Followers
                       </MDBCardText>
@@ -118,7 +138,12 @@ export default function Profile({
           </MDBRow>
         </MDBContainer>
       </div>
-      <ModalFollowers showmodal={showmodal} setShowmodal={setShowmodal} />
+      <ModalFollowers
+        showmodal={showmodal}
+        setShowmodal={setShowmodal}
+        addedfollower={addedfollower}
+        setAddedFollower={setAddedFollower}
+      />
       <ModalAlertTime
         setShowAlertModel={setShowAlertModel}
         showAlertModal={showAlertModal}

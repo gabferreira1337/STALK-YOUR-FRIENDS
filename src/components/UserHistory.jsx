@@ -58,57 +58,59 @@ export default function UserLocationComponent({
 
   return (
     <>
-      <h2>Your Locations History:</h2>
-      <Row>
-        <Col>
-          <div className="filter-container ">
-            <label
-              className="filter-label border rounded text-black"
-              htmlFor="filterOption"
-            >
-              Filter:
-              <select
-                id="filterOption"
-                value={filterOption}
-                onChange={handleFilterOptionChange}
+      <div style={{ paddingLeft: "10px" }}>
+        <h2>Your Locations History:</h2>
+        <Row>
+          <Col>
+            <div className="filter-container ">
+              <label
+                className="filter-label border rounded text-black"
+                htmlFor="filterOption"
               >
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-              </select>
-            </label>
-          </div>
-          <br />
-          <br />
-          <table className="table text-light ">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Latitude</th>
-                <th scope="col">Longitude</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {cpyUserLocations.map((location) => (
-                <tr key={location.ID}>
-                  <td>{location.CreatedAt.slice(0, 10)}</td>
-                  <td>{location.Latitude}</td>
-                  <td>{location.Longitude}</td>
-                  <td>
-                    <Button
-                      className="btn btn-sm btn-danger"
-                      type="submit"
-                      onClick={(e) => handleClick(e, location.ID)}
-                    >
-                      DELETE
-                    </Button>
-                  </td>
+                Filter by:
+                <select
+                  id="filterOption"
+                  value={filterOption}
+                  onChange={handleFilterOptionChange}
+                >
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </select>
+              </label>
+            </div>
+            <br />
+            <br />
+            <table className="table text-light ">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Latitude</th>
+                  <th scope="col">Longitude</th>
+                  <th scope="col"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </Col>
-      </Row>
+              </thead>
+              <tbody>
+                {cpyUserLocations.map((location) => (
+                  <tr key={location.ID}>
+                    <td>{location.CreatedAt.slice(0, 10)}</td>
+                    <td>{location.Latitude}</td>
+                    <td>{location.Longitude}</td>
+                    <td>
+                      <Button
+                        className="btn btn-sm btn-danger"
+                        type="submit"
+                        onClick={(e) => handleClick(e, location.ID)}
+                      >
+                        DELETE
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }

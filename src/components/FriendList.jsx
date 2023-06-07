@@ -11,7 +11,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import AddFriend from "./AddFriend";
 import CheckLocations from "./CheckLocations";
 
-export default function FriendsList() {
+export default function FriendsList({ addedfollower }) {
   const [users, setUsers] = useState([]);
   const [usersLocations, setUsersLocations] = useState([]);
   const [usersLastLoc, setUsersLastLoc] = useState([]);
@@ -23,7 +23,7 @@ export default function FriendsList() {
 
   useEffect(() => {
     fetchUsers();
-  }, [changevar, changeunf]);
+  }, [changevar, changeunf, addedfollower]);
 
   useEffect(() => {
     getLastPos();
@@ -37,7 +37,7 @@ export default function FriendsList() {
       );
       return { user, locations }; // return object with user info including last location
     });
-
+    // console.log(userLocations.user)
     setUserInfo(userLocations);
   }, [users, usersLastLoc, changevar, changeunf]); // update whenever these variabels change
 
@@ -54,11 +54,7 @@ export default function FriendsList() {
 
       setUsers(response.data.data);
       setUserIds(response.data.data);
-
-      // console.log(response.data.id);
     } catch (error) {
-      alert("Can't update your friends list");
-
       throw new Error(error.response.data); // Throw an error with the error message from the API
     }
   };
@@ -118,35 +114,39 @@ export default function FriendsList() {
               className="friends-list-container"
               style={{ maxHeight: "650px", overflowY: "auto" }}
             >
-              {userInfo.map((user) => (
-                <React.Fragment key={user.id}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemText
-                      className="list-text"
-                      primary={
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="black"
+              {userInfo.map((user, index) => (
+                <React.Fragment key={index}>
+                  <Row>
+                    <ListItem alignItems="flex-start">
+                      <Col>
+                        <ListItemText
+                          className="list-text"
+                          primary={
+                            <Typography
+                              sx={{ display: "inline" }}
+                              component="span"
+                              variant="body2"
+                              color="black"
+                            >
+                              {user.user.username}
+                            </Typography>
+                          }
+                        />
+                      </Col>
+                      <Col className="d-flex flex-column ">
+                        <Button
+                          className="btn btn-sm "
+                          id="btn-unf"
+                          onClick={(e) =>
+                            handle_event_click_unfollow(user.user.id)
+                          }
+                          type="button"
                         >
-                          {user.user.username}
-                        </Typography>
-                      }
-                    />
-                    <div className="d-flex flex-column">
-                      <Button
-                        className="btn btn-sm "
-                        id="btn-unf"
-                        onClick={(e) =>
-                          handle_event_click_unfollow(user.user.id)
-                        }
-                        type="button"
-                      >
-                        UNFOLLOW
-                      </Button>
-                    </div>
-                  </ListItem>
+                          UNFOLLOW
+                        </Button>
+                      </Col>
+                    </ListItem>
+                  </Row>
                   {user.locations.length > 0 && (
                     <>
                       <div className="last-loc">
@@ -162,13 +162,15 @@ export default function FriendsList() {
                       </div>
                     </>
                   )}
-                  <Button
-                    className="btn btn-sm"
-                    onClick={() => handle_check_locations(user.user.id)}
-                  >
-                    CheckLocations
-                  </Button>
-                  <Divider variant="inset" component="li" />
+                  <Row>
+                    <Button
+                      className="btn btn-sm"
+                      onClick={() => handle_check_locations(user.user.id)}
+                    >
+                      CheckLocations
+                    </Button>
+                    <Divider component="li" />
+                  </Row>
                 </React.Fragment>
               ))}
             </div>

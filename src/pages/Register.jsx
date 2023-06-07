@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navb from "../components/Navbar";
-import Mapb from "../components/Mapb";
-import { AuthContext, AuthProvider } from "../contexts/auth";
+import MapP from "../components/MapP";
+import { AuthContext } from "../contexts/auth";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 export const Register = () => {
   const navigate_login = useNavigate("");
 
-  const { authenticated, login, register } = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -82,7 +82,7 @@ export const Register = () => {
             </button>
           </Col>
           <Col sm={6} className="col-2 ">
-            <Mapb />
+            <MapP />
           </Col>
         </Row>
       </Container>

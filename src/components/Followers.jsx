@@ -1,15 +1,15 @@
-import * as React from "react";
+import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
-import { getfollowing } from "../services/api";
+import { getfollowing, addFriend } from "../services/api";
 import "../styles/FriendsList.css";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
-export default function Followers() {
+export default function Followers({ addedfollower, setAddedFollower }) {
   const [followersArray, setFollowersArray] = useState([]);
 
   // get followers and store it in following
@@ -32,6 +32,13 @@ export default function Followers() {
     };
   }, []);
 
+  const handle_Click = (id) => {
+    addFriend(id);
+
+    //circular so increment until 100 and back to 0
+    setAddedFollower((addedfollower + 1) % 100);
+  };
+
   return (
     <>
       <Row>
@@ -41,25 +48,33 @@ export default function Followers() {
               className="friends-list"
               sx={{ width: "100%", maxWidth: 260 }}
             >
-              {followersArray[0].map((follower) => (
-                <React.Fragment key={follower.id}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemText
-                      className="list-text"
-                      primary={
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="black"
-                        >
-                          Username: {follower.username}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <Divider variant="inset" component="li" />
+              {followersArray[0].map((follower, index) => (
+                <React.Fragment key={index}>
+                  <Row>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                        className="list-text"
+                        primary={
+                          <Typography
+                            sx={{ display: "inline" }}
+                            component="span"
+                            variant="body2"
+                            color="black"
+                          >
+                            {follower.username}
+                          </Typography>
+                        }
+                      />
+                      <Button
+                        className="btn btn-sm"
+                        type="button"
+                        onClick={() => handle_Click(follower.id)}
+                      >
+                        Follow
+                      </Button>
+                    </ListItem>
+                    <Divider component="li" />
+                  </Row>
                 </React.Fragment>
               ))}
             </List>

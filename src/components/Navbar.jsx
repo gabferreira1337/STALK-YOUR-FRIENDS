@@ -1,12 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Row, Col } from "react-bootstrap/Navbar";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "../styles/nav.css";
 
 export default function Navb() {
+  const renderTooltip = (props) => (
+    <Tooltip id="tooltip" {...props}>
+      This is a project for a location tracking application that allows users to
+      register their locations and share them with their friends.
+    </Tooltip>
+  );
   return (
     <Navbar className="navbar text-white " expand="lg" id="nav">
       <Container>
@@ -19,15 +26,19 @@ export default function Navb() {
         />
         <Navbar.Collapse className="text-white me-auto" id="basic-navbar-nav">
           <Nav className="me-auto" variant="light">
-            <NavDropdown
-              className="about"
-              title="About"
-              id="basic-nav-dropdown"
+            <OverlayTrigger
+              placement="bottom"
+              trigger="click"
+              overlay={renderTooltip}
+              rootClose
             >
-              <NavDropdown.Item href="#action/3.1"></NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2"></NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3"></NavDropdown.Item>
-            </NavDropdown>
+              <NavDropdown
+                className="about"
+                title="About"
+                id="basic-nav-dropdown"
+                disabled
+              ></NavDropdown>
+            </OverlayTrigger>
           </Nav>
         </Navbar.Collapse>
       </Container>

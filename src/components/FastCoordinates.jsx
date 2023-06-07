@@ -10,7 +10,6 @@ export default function FastCoordinates() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -18,7 +17,6 @@ export default function FastCoordinates() {
           setLat(latitude);
           setLng(longitude);
 
-        
           submitCoord(lat, lng);
         },
         (error) => {

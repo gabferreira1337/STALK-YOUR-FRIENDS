@@ -7,15 +7,21 @@ import "../styles/MapP.css";
 import { Col, Row, Button } from "react-bootstrap";
 import ModalSos from "../components/ModalSos";
 
-export default function LocationComponent({ setAddedValue }) {
+export default function LocationComponent({
+  setAddedValue,
+  setAddedFilterUser,
+  setAddedFilterChange,
+}) {
   const [locations, setLocations] = useState([]);
 
   const [selectedstart, setSelectedstart] = useState(new Date("2023-01-01"));
   const [selectedend, setSelectedend] = useState(new Date("2024-01-01"));
   const [selectedusername, setSelectedusername] = useState([]);
   const [userData, setUserData] = useState([]);
-  const [filterOption, setFilterOption] = useState("newest");
   const [matchedUser, setMatchedUser] = useState([]);
+  const [filteredLocUsers, setFilteredLocUsers] = useState([]);
+  const [filterOption, setFilterOption] = useState("newest");
+  const [filterUserName, setFilterUsername] = useState("");
   const [showmodal, setShowmodal] = useState(null);
 
   useEffect(() => {
@@ -77,7 +83,7 @@ export default function LocationComponent({ setAddedValue }) {
           for (let j = 0; j < sosArray.length; j++) {
             if (
               userData[i].username === sosArray[j].username &&
-              sosArray[j].sos == true
+              sosArray[j].sos === true
             ) {
               matchedUsers.push(sosArray[j].username);
             }
@@ -99,7 +105,7 @@ export default function LocationComponent({ setAddedValue }) {
 
   let cpyUserLocations = [...updatedLocations];
 
-  // check if each username in cpyuserlcations array is included in the matchedUsers and add true sos state if it is included
+  // check if each username in cpyuserlocations array is included in the matchedUsers and add true sos state if it is included
   const testfunction = () => {
     let cpyUserLocations = [...updatedLocations];
     cpyUserLocations = cpyUserLocations.map((location) => {
@@ -115,7 +121,7 @@ export default function LocationComponent({ setAddedValue }) {
   // store in addedValue array to send via props to map everytime locations array change
   useEffect(() => {
     setAddedValue(cpyUserLocations);
-  }, [locations, setAddedValue]);
+  }, [locations, setAddedValue, filterUserName]);
 
   useEffect(() => {
     listusers();
@@ -151,6 +157,23 @@ export default function LocationComponent({ setAddedValue }) {
       )
     : cpyUserLocations;
 
+  // filter by name
+  const handleUsernameChange = (e) => {
+    setFilterUsername(e.target.value);
+
+    setAddedFilterChange(e.target.value);
+
+    const filterUsersLoc = cpyUserLocations.filter((location) => {
+      return location.username.toLowerCase() === e.target.value.toLowerCase();
+    });
+
+    setFilteredLocUsers(filterUsersLoc);
+  };
+
+  useEffect(() => {
+    setAddedFilterUser(filteredLocUsers);
+  }, [filteredLocUsers, filterUserName]);
+
   return (
     <>
       <Row>
@@ -159,7 +182,7 @@ export default function LocationComponent({ setAddedValue }) {
           <DatePicker
             selected={selectedstart}
             onChange={(date) => setSelectedstart(date)}
-            dateFormat="yyyy/MM/dd" // Set the desired date format
+            dateFormat="yyyy/MM/dd"
           />
         </Col>
         <Col>
@@ -167,16 +190,16 @@ export default function LocationComponent({ setAddedValue }) {
           <DatePicker
             selected={selectedend}
             onChange={(date) => setSelectedend(new Date(date))}
-            dateFormat="yyyy/MM/dd" // Set the desired date format
+            dateFormat="yyyy/MM/dd"
           />
         </Col>
       </Row>
-      <div className="filter-container ">
+      <div className="filter-container pb-2 ">
         <label
           className="filter-label border rounded text-black"
           htmlFor="filterOption"
         >
-          Filter:
+          Filter by:
           <select
             id="filterOption"
             value={filterOption}
@@ -185,6 +208,16 @@ export default function LocationComponent({ setAddedValue }) {
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
           </select>
+          <div className="input-group input-group-sm ">
+            <input
+              type="text"
+              value={filterUserName}
+              placeholder="Filter by Username"
+              aria-label="Filter by Username"
+              aria-describedby="basic-addon1"
+              onChange={handleUsernameChange}
+            />
+          </div>
         </label>
       </div>
       <div style={{ maxHeight: "500px", overflowY: "auto" }}>
@@ -196,31 +229,53 @@ export default function LocationComponent({ setAddedValue }) {
               <th scope="col">Time</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {cpyUserLocations.map((location) => {
-              // if location.sos === true return red btn
-              const sosButton = location.sos ? (
-                <Button
-                  className="btn btn-danger"
-                  onClick={() => HandleSosB(location.username)}
-                >
-                  SOS
-                </Button>
-              ) : null;
+            {filterUserName
+              ? filteredLocUsers.map((location) => {
+                  const sosButton = location.sos ? (
+                    <Button
+                      className="btn btn-danger"
+                      onClick={() => HandleSosB(location.username)}
+                    >
+                      SOS
+                    </Button>
+                  ) : null;
 
-              return (
-                <tr key={location.ID}>
-                  <td>{location.username}</td>
-                  <td>{location.CreatedAt.slice(0, 10)}</td>
-                  <td>{location.CreatedAt.slice(11, 16)}</td>
-                  <td>{location.Latitude}</td>
-                  <td>{location.Longitude}</td>
-                  <td>{sosButton}</td>
-                </tr>
-              );
-            })}
+                  return (
+                    <tr key={location.ID}>
+                      <td>{location.username}</td>
+                      <td>{location.CreatedAt.slice(0, 10)}</td>
+                      <td>{location.CreatedAt.slice(11, 16)}</td>
+                      <td>{location.Latitude}</td>
+                      <td>{location.Longitude}</td>
+                      <td>{sosButton}</td>
+                    </tr>
+                  );
+                })
+              : cpyUserLocations.map((location) => {
+                  const sosButton = location.sos ? (
+                    <Button
+                      className="btn btn-danger"
+                      onClick={() => HandleSosB(location.username)}
+                    >
+                      SOS
+                    </Button>
+                  ) : null;
+
+                  return (
+                    <tr key={location.ID}>
+                      <td>{location.username}</td>
+                      <td>{location.CreatedAt.slice(0, 10)}</td>
+                      <td>{location.CreatedAt.slice(11, 16)}</td>
+                      <td>{location.Latitude}</td>
+                      <td>{location.Longitude}</td>
+                      <td>{sosButton}</td>
+                    </tr>
+                  );
+                })}
           </tbody>
         </table>
       </div>

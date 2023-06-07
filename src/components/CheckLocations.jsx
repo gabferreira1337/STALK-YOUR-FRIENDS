@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getHistory, getUserInfo, deletePosition } from "../services/api";
-import { Form, Button, Container, Modal } from "react-bootstrap";
+import React from "react";
+import { Button, Modal } from "react-bootstrap";
 
 export default function CheckLocations({
   usersLocations,
@@ -11,7 +10,11 @@ export default function CheckLocations({
 
   return (
     <>
-      <Modal show={showmodal} onHide={() => setShowmodal(false)}>
+      <Modal
+        show={showmodal}
+        onHide={() => setShowmodal(false)}
+        id="modal-friends"
+      >
         <Modal.Header closeButton>
           <Modal.Title>User Locations History</Modal.Title>
         </Modal.Header>

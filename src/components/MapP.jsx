@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import "../styles/Mapb.css";
+import { AuthContext } from "../contexts/auth";
 import "../styles/MapP.css";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiZ2FidWZwIiwiYSI6ImNsZ3dwcXN1djAwbmozZnBwZ2ttOHlva2IifQ.dfSkuFimQrAzUDDlNWSj5Q";
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const MapP = ({ addedValue }) => {
+const MapP = ({ addedValue, addedFilterUser, addedFilterChange }) => {
+  const { authenticated } = useContext(AuthContext);
+
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-7);
@@ -46,24 +46,52 @@ const MapP = ({ addedValue }) => {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-    //console.log(addedValue);
-    const updatedFeatures = addedValue.map((obj) => {
-      const { Latitude, Longitude, sos, username } = obj;
+    if (!authenticated) {
+      // Clear markers if not authenticated
+      const markers = document.getElementsByClassName("marker");
+      while (markers[0]) {
+        markers[0].parentNode.removeChild(markers[0]);
+      }
+      return;
+    }
 
-      return {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [Longitude, Latitude],
-        },
-        properties: {
-          title: `${username}`,
-          description: `lat : ${Latitude} lng : ${Longitude}`,
-          sos: `${sos}`,
-        },
-      };
-    });
+    let updatedFeatures;
 
+    if (addedFilterChange) {
+      updatedFeatures = addedFilterUser.map((obj) => {
+        const { Latitude, Longitude, sos, username } = obj;
+
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [Longitude, Latitude],
+          },
+          properties: {
+            title: `${username}`,
+            description: `lat : ${Latitude} lng : ${Longitude}`,
+            sos: `${sos}`,
+          },
+        };
+      });
+    } else {
+      updatedFeatures = addedValue.map((obj) => {
+        const { Latitude, Longitude, sos, username } = obj;
+
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [Longitude, Latitude],
+          },
+          properties: {
+            title: `${username}`,
+            description: `lat : ${Latitude} lng : ${Longitude}`,
+            sos: `${sos}`,
+          },
+        };
+      });
+    }
     const geojson = {
       type: "FeatureCollection",
       features: updatedFeatures,
@@ -99,15 +127,15 @@ const MapP = ({ addedValue }) => {
     }
   }, [addedValue]);
 
-  /* let startY = 0
+  let startY = 0;
   useEffect(() => {
-    const handleTouchStart = (e) => {
+    let handleTouchStart = (e) => {
       startY = e.touches[0].clientY; // initial touch position
     };
 
-    const handleTouchMove = (e) => {
+    let handleTouchMove = (e) => {
       const touchY = e.touches[0].clientY;
-      const deltaY = touchY - startY;  //vertical distance between the initial touch position and the current touch position
+      const deltaY = touchY - startY; //vertical distance between the initial touch position and the current touch position
 
       if (deltaY === 0) return;
 
@@ -118,20 +146,29 @@ const MapP = ({ addedValue }) => {
         mapContainer.current.scrollTop + mapContainer.current.offsetHeight <
         mapContainer.current.scrollHeight;
 
-      if ((isScrollingUp && canScrollUp) || (isScrollingDown && canScrollDown)) {
+      if (
+        (isScrollingUp && canScrollUp) ||
+        (isScrollingDown && canScrollDown)
+      ) {
         e.stopPropagation(); // stop the event propagation, preventing the map from capturing the touch event allowing scroll the page
       }
     };
 
-    mapContainer.current.addEventListener("touchstart", handleTouchStart);
-    mapContainer.current.addEventListener("touchmove", handleTouchMove);
+    if (mapContainer.current) {
+      mapContainer.current.addEventListener("touchstart", handleTouchStart);
+      mapContainer.current.addEventListener("touchmove", handleTouchMove);
+    }
 
     return () => {
-      mapContainer.current.removeEventListener("touchstart", handleTouchStart);
-      mapContainer.current.removeEventListener("touchmove", handleTouchMove);
+      if (mapContainer.current) {
+        mapContainer.current.removeEventListener(
+          "touchstart",
+          handleTouchStart
+        );
+        mapContainer.current.removeEventListener("touchmove", handleTouchMove);
+      }
     };
-  }, []);*/
-
+  }, []);
   return (
     <>
       <div ref={mapContainer} className="map-container" />

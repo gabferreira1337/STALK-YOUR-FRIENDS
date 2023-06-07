@@ -47,7 +47,7 @@ export default function Coordinates() {
           />
         </Col>
         <Button
-          className="btn btn-light btn-outline-dark btn-lg"
+          className="btn btn-light btn-outline-dark btn-lg rounded-pill"
           type="submit"
           onClick={handleSubmit}
         >

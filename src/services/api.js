@@ -132,7 +132,6 @@ export const addFriend = async (id) => {
       { FollowerUserID: parseInt(id) },
       config
     );
-    //console.log(response.data);
 
     // return response.data;
   } catch (error) {
