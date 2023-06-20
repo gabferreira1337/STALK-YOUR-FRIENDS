@@ -1,23 +1,12 @@
-import React, { useState } from "react";
-import './App.css';
-import { Login } from "./pages/Login";
-import { Register } from "./components/Register";
-import AppRoutes from "./AppRoutes"
-
-
-
-
+import React from "react";
+import "./styles/App.css";
+import AppRoutes from "./AppRoutes";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-
   return (
-    <div className="App">
-      <AppRoutes/>
+    <div className="App container-fluid">
+      <AppRoutes />
     </div>
   );
 }

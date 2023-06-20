@@ -1,77 +1,79 @@
-import React, {createContext} from "react"
-import {useState, useEffect} from 'react'
+import React, { createContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { api, createSession, createUser } from "../services/api";
 
-import {api, createSession} from "../services/api"
+export const AuthContext = createContext();
 
-export const AuthContext = createContext();   // context is used to save in the memory
-
-export const AuthProvider = ({children}) => {     // pass everything inside AuthProvider with props children
+export const AuthProvider = ({ children }) => {
+  // pass everything inside AuthProvider with props children
 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // user != NULL authenticated = true
-// !! = cast to boolean
+  // !! = cast to boolean
 
-useEffect(()=> {          // comeca e os componentes sao renderizados sem esperar asincrono
+  useEffect(() => {
+    const recoveredUser = sessionStorage.getItem("username");
+    const token = sessionStorage.getItem("token");
 
-  const recoveredUser = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+    if (recoveredUser && token) {
+      setUser(recoveredUser);
+      api.defaults.headers.Authorization = " ${token}";
+    }
 
-  if(recoveredUser && token){
-    setUser(JSON.parse(recoveredUser)); //
-    api.defaults.headers.Authorization = "${token}";
-  }
+    setLoading(false);
+  }, []);
 
-  setLoading(false);  // ajuda no carregamento da pagina
+  const register = async (username, password) => {
+    try {
+      const response = await createUser(username, password);
 
-},[]); // independente do estado
-
-  const login = async (email, pass) => {
-
-      const response = await createSession(email, pass);
-
-      console.log("login", response.data);
-
-      // api criar uma session
-
-      const loggedUser = response.data.user;
-      const token = response.data.token;
-       
-      localStorage.setItem("user", JSON.stringify(loggedUser));   //save in the local storage 
-
-      localStorage.setItem("token", token); 
-
-
-      api.defaults.headers.Authorization = '${token}';
-
-      
-        setUser(loggedUser);
-        navigate('/');
-      
-      
+      navigate("/login");
+    } catch (error) {
+      console.error("API request error:", error);
+    }
   };
 
+  const login = async (username, password) => {
+    try {
+      const response = await createSession(username, password);
+      const loggedUser = response.username;
+      const token = response.token;
+
+      sessionStorage.setItem("username", JSON.stringify(loggedUser)); //save in the session storage
+
+      sessionStorage.setItem("token", token);
+
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+
+      setUser(loggedUser);
+
+      navigate("/");
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
 
   const logout = () => {
-    console.log("logout");
-    localStorage.removeItem("user");   // remove form local storage the credentials
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("username"); // remove form  session storage the credentials
+    sessionStorage.removeItem("token");
 
-    api.defaults.headers.Authorization = null;      //set authorization to null;
+    api.defaults.headers.Authorization = null; //set authorization to null;
 
     setUser(null);
     navigate("/login");
   };
 
-  return(
-  
-  <AuthContext.Provider value={{authenticated: !!user, user,loading, login, logout}}> 
-    {children} 
-  </AuthContext.Provider>
-);
-
-}
+  // store if user is authenticated , username , login , logout , register methods and loading values (!! boolean test)
+  return (
+    <AuthContext.Provider
+      value={{ authenticated: !!user, user, loading, register, login, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

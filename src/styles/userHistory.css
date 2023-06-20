@@ -1,0 +1,19 @@
+h1 {
+  color: aliceblue;
+}
+
+h2 {
+  color: aliceblue;
+}
+
+p {
+  color: rgb(0, 0, 0);
+}
+
+.filter-label {
+  background-color: aliceblue;
+}
+
+.description {
+  color: black;
+}

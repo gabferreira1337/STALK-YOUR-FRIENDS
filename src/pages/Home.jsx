@@ -1,53 +1,51 @@
-import React, {useEffect, useContext,useState} from "react"
-import { AuthContext } from "../contexts/auth";
-
-import { getUsers } from "../services/api";
-
-
+import React, { useState } from "react";
+import NavbAuth from "../components/Navbar_auth";
+import MapP from "../components/MapP";
+import { Container, Row, Col } from "react-bootstrap";
+import Coordinates from "../components/Coordinates";
+import LocationComponent from "../components/FollowersLoc";
+import SOS_B from "../components/SOSB";
+import FastCoordinates from "../components/FastCoordinates";
+import "../styles/MapP.css";
 
 const HomePage = () => {
-
-  const {logout} = useContext(AuthContext);
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-
-      (async () => {
-        const response = await getUsers();
-        setUsers(response.data);
-        setLoading(false);
-
-      })();    //funcao anonima
-  },[]);
-
-  const handleLogout = () => {
-
-    logout();
-  }
-
-  if(loading){
-    <div className="loading">Loading data...</div>;
-  }
+  const [addedValue, setAddedValue] = useState([]);
+  const [addedFilterUser, setAddedFilterUser] = useState([]);
+  const [addedFilterChange, setAddedFilterChange] = useState("");
+  // <div style={{ paddingLeft: "10px" }}></div>
 
   return (
-
-  <>
-    <h1>Hello</h1>
-    <button onClick={handleLogout}>Logout</button>
-    <ul>
-      {
-        users.map((user) => (
-          <li>
-            {user._id} - {user.email}
-          </li>
-        ))
-      }
-    </ul>
-  </>
-
+    <>
+      <NavbAuth />
+      <Container className="container  d-flex " id="form-container">
+        <Row className="justify-content-between ">
+          <Col sm={9} className="" id="col-1">
+            <LocationComponent
+              setAddedValue={setAddedValue}
+              setAddedFilterUser={setAddedFilterUser}
+              setAddedFilterChange={setAddedFilterChange}
+            />
+          </Col>
+          <Col sm={3} className="col-2 flex-end">
+            <MapP
+              addedValue={addedValue}
+              addedFilterUser={addedFilterUser}
+              addedFilterChange={addedFilterChange}
+            />
+          </Col>
+        </Row>
+      </Container>
+      <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <Coordinates />
+      </div>
+      <Row>
+        <FastCoordinates />
+      </Row>
+      <Row>
+        <SOS_B />
+      </Row>
+    </>
   );
-
 };
 
 export default HomePage;

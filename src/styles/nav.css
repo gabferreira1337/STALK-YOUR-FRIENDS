@@ -1,0 +1,26 @@
+.title {
+  color: aliceblue;
+  font-size: 2em;
+}
+
+.title:hover {
+  color: rgb(168, 192, 224);
+}
+
+.about {
+  font-size: 1.25em;
+}
+
+.navbar-toggler {
+  color: aliceblue;
+  background-color: aliceblue;
+  border: solid;
+}
+
+#basic-nav-dropdown {
+  color: aliceblue;
+}
+
+.nav-auth {
+  margin: 0px;
+}
